@@ -12,7 +12,11 @@ int main(){
     if (!bgTexture.loadFromFile("./images/BGTexture.png")) std::cout << "Error loading background texture" << std::endl;
     sf::RectangleShape background(sf::Vector2f(400.f,600.f));
     background.setTexture(&bgTexture);
-    background.setFillColor(sf::Color(50,50,250));
+    //background.setFillColor(sf::Color(50,50,250));
+    background.setFillColor(sf::Color(50,250,250));    
+    
+    
+    
     
     sf::Texture bgTexture2;    
     if (!bgTexture2.loadFromFile("./images/BGTexture2.png")) std::cout << "Error loading background texture 2" << std::endl;
@@ -30,9 +34,11 @@ int main(){
     sf::Sprite player;
     player.setTexture(spriteTextures);
     Character character(player);
+    
     sf::Sprite focusPoint;
     focusPoint.setTexture(spriteTextures);
     focusPoint.setTextureRect(sf::IntRect(112,172,12,12));
+    focusPoint.setOrigin(6,6);
     
     
     BulletArray bullets;

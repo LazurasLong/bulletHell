@@ -20,6 +20,7 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
                 if (not (*it).isDead()){
                     if (bullets.collides((*it).pos,false)){
                         (*it).getsHit();
+                        //Play sound
                         it--;
                     }
                     
@@ -41,7 +42,8 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
             //1
             //2
             //3
-            rand()%3+1
+            4
+            //rand()%3+1
             );
     }
     updateRoutine();
@@ -92,6 +94,7 @@ void EnemyArray::startRoutine(int type){
     else if (type==1) routineTime = 500;
     else if (type==2) routineTime = 500;
     else if (type==3) routineTime = 500;
+    else if (type==4) routineTime = 750;
 
     std::cout << "routine started " << routineType << " " << routineTime << std::endl;
     
@@ -135,12 +138,17 @@ void EnemyArray::updateRoutine(){
             Enemy newEnemy(3,false,1);
             enemies.push_back(newEnemy);
         }
-        else if (routineTime==400){
+        else if (routineTime==450){
             Enemy newEnemy(3,false,0);
             Enemy newEnemy2(3,false,2);
             enemies.push_back(newEnemy);
             enemies.push_back(newEnemy2);
         }
+    }
+    else if (routineType==4){
+        Enemy newEnemy(4,false,0);
+        enemies.push_back(newEnemy);
+        
     }
     
     if (routineTime!=0) routineTime--;

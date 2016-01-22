@@ -13,12 +13,19 @@ public:
     bool isFriendly();
     bool collides(float,float,bool);
     int getType();
+    int getTime();
+    
+    bool canUnpause();
+    void unpause();
     
     sf::Vector2f pos;
 
 private:
     int type;
+    int time;
     bool friendly;
+    bool paused;
+    bool bounce;
     sf::Vector2f vel;
     
 };

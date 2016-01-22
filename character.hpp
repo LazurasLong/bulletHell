@@ -13,10 +13,12 @@ public:
     bool isFocused();
     
     sf::Vector2f pos;
+    int timeAlive;
     
 private:
     
     int sprx, spry;
+
     bool focused;
     int shootTimeout;
     static const int shootFreq = 3;

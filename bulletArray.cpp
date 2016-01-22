@@ -11,9 +11,17 @@ BulletArray::BulletArray(){
 
 void BulletArray::updateArray(sf::Vector2f playerIs){
     
+    bool can_unpause = false;
+    
     for (std::list<Bullet>::iterator it = bullets.begin(); it != bullets.end(); it++){
         if ((*it).in_bounds()){
             (*it).updateBullet();
+            if ((*it).getType()==15){
+                if ((*it).canUnpause() or can_unpause){
+                    can_unpause = true;
+                    (*it).unpause();
+                }
+            }
             /*if ((*it).isFriendly() and enemyArray.collides((*it).pos.x,(*it).pos.y)){
                 bullets.erase(it);
                 it--;
@@ -33,14 +41,14 @@ void BulletArray::updateArray(sf::Vector2f playerIs){
 
 }
 
-void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, int stage){
+void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, int attack_type, int stage){
     
     if (player){
         Bullet newPlayerBullet(ox,oy-40,0,-15,true,bullet_type);
         bullets.push_back(newPlayerBullet);
     } else {
         //angle = 0.0174533*DEGREES
-        if (bullet_type==1){
+        if (attack_type==1){
             float difx = ox-playerpos.x;
             float dify = oy-playerpos.y;
             double angle = atan(dify/difx);
@@ -59,14 +67,14 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
             Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type+10);
             bullets.push_back(newEnemyBullet);
         }
-        else if (bullet_type==2){
-            for (int i=0;i<3;i++){
+        else if (attack_type==2){
+            for (int i=0;i<5;i++){
                 float difx = ox-playerpos.x+(-60+i*30);
                 float dify = oy-playerpos.y;
                 double angle = atan(dify/difx);
                 
-                float bvx = (float)3*cos(angle);
-                float bvy = (float)3*sin(angle);
+                float bvx = (float)10*cos(angle);
+                float bvy = (float)10*sin(angle);
                 
                 if (difx >= 0) {
                     bvx = 0-bvx;
@@ -77,15 +85,27 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 bullets.push_back(newEnemyBullet);
             }
         }
-        else if (bullet_type==3){
+        else if (attack_type==3){
             
-                double angle = 0.0174533*(stage*10);
+                double angle = 0.0174533*(stage*15);
                 float bvx = (float)5*cos(angle);
                 float bvy = (float)5*sin(angle);
                 
                 Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type);
+                Bullet newEnemyBullet2(ox,oy,-bvx,bvy,false,10+bullet_type);
                 bullets.push_back(newEnemyBullet);
+                bullets.push_back(newEnemyBullet2);
                 
+        }
+        else if (attack_type==4){
+            
+            double angle = 0.0174533*(stage*10);
+            float bvx = (float)cos(angle);
+            float bvy = (float)sin(angle);
+            Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type);
+            bullets.push_back(newEnemyBullet);
+            
+            
         }
     }
 }

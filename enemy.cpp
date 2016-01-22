@@ -74,18 +74,24 @@ void Enemy::shoot(BulletArray &bullets){
     
     if (canShoot()){            
         if (type==1) {
-            bullets.addBullet(false,pos.x,pos.y,type,1);
+            bullets.addBullet(false,pos.x,pos.y,1,type,0);
             shootTimeout = 20;
         }
-        else if (type==2){
-            bullets.addBullet(false,pos.x,pos.y,type,stage);
+        else if (type==4){
+            bullets.addBullet(false,pos.x,pos.y,2,type,0);
             stage++;
             shootTimeout = 15;
         }
         else if (type==3){
-            bullets.addBullet(false,pos.x,pos.y,type,stage);
+            if (modified==0 or modified==2) bullets.addBullet(false,pos.x,pos.y,3,type,stage);
+            else bullets.addBullet(false,pos.x,pos.y,4,type,stage);
             stage++;
             shootTimeout = 1;
+        }
+        else if (type==2){
+            if (stage<36) bullets.addBullet(false,pos.x,pos.y,5,4,stage);
+            stage++;
+            shootTimeout = 0;
         }
     } else if (shootTimeout > 0){
         shootTimeout--;

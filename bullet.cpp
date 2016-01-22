@@ -11,14 +11,57 @@ Bullet::Bullet(float x, float y, float xvel, float yvel, bool playerShot, int bu
 
     friendly = playerShot;
     type = bullet_type;
+    time = 0;
+    paused = false;
+    if (type==15) bounce = true;
+    else bounce = false;
 }
 
 Bullet::~Bullet() {}
 
 void Bullet::updateBullet(){
     
-    pos.x += vel.x;
-    pos.y += vel.y;    
+    if (type==12){
+        if (time<20 or time>50){
+            pos.x += vel.x;
+            pos.y += vel.y;
+        }
+        else if (time == 30){
+            vel.x = vel.x/4;
+            vel.y = vel.y/4;
+        }
+    }
+    else if (type==15){
+        if (not paused){
+            pos.x += vel.x;
+            pos.y += vel.y;
+            if (bounce){
+                if(pos.x>=400){
+                    vel.x = -vel.x;
+                    pos.x += vel.x;
+                    bounce = false;
+                }
+                else if (pos.x<=0){
+                    vel.x = -vel.x;
+                    pos.x += vel.x;
+                    bounce = false;
+                }
+                
+                if (pos.y<=0){
+                    vel.y = -vel.y;
+                    pos.y += vel.y;
+                    bounce = false;
+                }
+            }
+            if (time>100 and time<300) paused = true;
+        }
+    }
+    else {
+        pos.x += vel.x;
+        pos.y += vel.y;
+    }
+    
+    time++;
 }
 
 bool Bullet::in_bounds(){
@@ -59,5 +102,24 @@ bool Bullet::collides(float centerx,float centery,bool player){
 int Bullet::getType(){
     
     return type;
+    
+}
+
+/*int Bullet::getTime(){
+    
+    return time;
+    
+}*/
+
+bool Bullet::canUnpause(){
+
+    return (paused and time>100 and time<300);
+    
+}
+
+void Bullet::unpause(){
+    
+    paused = false;
+    time = 300;
     
 }

@@ -11,7 +11,7 @@ public:
     
     BulletArray();
     void updateArray(sf::Vector2f);
-    void addBullet(bool,float,float,int,int);
+    void addBullet(bool,float,float,int,int,int);
     int amountBullets();
     sf::Vector2f getBulletPos(int);
     bool isFriendly(int);

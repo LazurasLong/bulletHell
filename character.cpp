@@ -15,12 +15,15 @@ Character::Character(sf::Sprite &player){
     
     pos.x = 200;
     pos.y = 500;
-
+    
+    timeAlive=0;
     shootTimeout = 0;
     focused = false;
 }
 
 void Character::move(sf::Sprite &player){
+    
+    timeAlive++;
     
     float travelpos;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
@@ -42,8 +45,10 @@ void Character::move(sf::Sprite &player){
         spry = 0;
     }
     
-    player.setTextureRect(sf::IntRect(sprx,spry,32,45));
+    sprx = 384+32*(timeAlive/8%4);
     
+    player.setTextureRect(sf::IntRect(sprx,spry,32,45));
+    player.setOrigin(16,22);
     
     //Y
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
@@ -60,7 +65,7 @@ void Character::shoot(BulletArray &bullets){
     if (shootTimeout == 0){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
             
-            bullets.addBullet(true,pos.x,pos.y,9,1);
+            bullets.addBullet(true,pos.x,pos.y,9,0,0);
             shootTimeout = shootFreq;
         }
     } else {
