@@ -22,7 +22,7 @@ public:
     bool canDelete();
     bool isMirror();
     bool in_bounds();
-    bool in_bounds_shoot();
+
     
 private:    
     
@@ -35,7 +35,9 @@ private:
     int stage;
     
     bool mirror;
+    bool in_bounds_shoot();
     bool canShoot();
+    
     
 };
 

@@ -34,16 +34,16 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
                 it--;
             }
         }
-    } else if (canEnd()){
+    } else if (/*canEnd()){
         startRoutine(0);
-    } else if (routineEnded() and playerAlive){
+    } else if (routineEnded() and*/ playerAlive){
 
         startRoutine(
             //1
             //2
             //3
-            4
-            //rand()%3+1
+            //4
+            rand()%4+1
             );
     }
     updateRoutine();
@@ -146,8 +146,10 @@ void EnemyArray::updateRoutine(){
         }
     }
     else if (routineType==4){
-        Enemy newEnemy(4,false,0);
-        enemies.push_back(newEnemy);
+        if (routineTime==750){
+            Enemy newEnemy(4,false,0);
+            enemies.push_back(newEnemy);
+        }
         
     }
     
@@ -159,6 +161,8 @@ bool EnemyArray::canEnd(){
     
     if (routineType==1 and routineTime<350) return true;
     else if (routineType==2 and routineTime<250) return true;
+    else if (routineType==3 and routineTime<300) return true;
+    else if (routineType==4 and routineTime < 500) return true;
     else return false;
     
 }

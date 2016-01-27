@@ -20,6 +20,7 @@ Enemy::Enemy(int t, bool m, int mod){
     if (t==1) hp = 1;
     else if (t==2) hp = 1;
     else if (t==3) hp = 5;
+    else if (t==4) hp = 20;
     
 }
 
@@ -64,6 +65,16 @@ void Enemy::move(){
         else if (timeAlive>200) pos.y = (timeAlive-100)*2;
         
     }
+    else if (type==4){
+        if (timeAlive<100){
+            pos.x = timeAlive*2;
+            pos.y = 150+15*sin(0.0174533*timeAlive);
+        }
+        else if (timeAlive>300){
+            pos.x = (timeAlive-200)*2;
+            pos.y = 150+15*sin(0.0175433*(timeAlive-200));
+        }
+    }
         
     if (mirror){
         pos.x = 400-pos.x;
@@ -77,7 +88,7 @@ void Enemy::shoot(BulletArray &bullets){
             bullets.addBullet(false,pos.x,pos.y,1,type,0);
             shootTimeout = 20;
         }
-        else if (type==4){
+        else if (type==2){
             bullets.addBullet(false,pos.x,pos.y,2,type,0);
             stage++;
             shootTimeout = 15;
@@ -88,9 +99,10 @@ void Enemy::shoot(BulletArray &bullets){
             stage++;
             shootTimeout = 1;
         }
-        else if (type==2){
-            if (stage<36) bullets.addBullet(false,pos.x,pos.y,5,4,stage);
-            stage++;
+        else if (type==4){
+            if (stage<=9) bullets.addBullet(false,pos.x,pos.y,5,type,stage);
+            if (timeAlive>=100 and timeAlive<=300) stage++;
+            if (timeAlive==200) stage=0;
             shootTimeout = 0;
         }
     } else if (shootTimeout > 0){
@@ -125,7 +137,7 @@ sf::Vector2f Enemy::getSprite(){
     else {
         spr.y = (type-1)*32;
     
-        if (type==1) {
+        if (type==1){
             if (timeAlive<35 or timeAlive>108){
                 if (timeAlive%15<5) spr.x = 9*32;
                 else if (timeAlive%15<10) spr.x = 10*32;
@@ -138,7 +150,7 @@ sf::Vector2f Enemy::getSprite(){
             else if (timeAlive < 50 or timeAlive > 100) spr.x = 3*32;
             else spr.x = timeAlive%4*32;
         }
-        else if (type==2) {
+        else if (type==2){
             if (timeAlive<20 or timeAlive>130){
                 if (timeAlive%15<5) spr.x = 9*32;
                 else if (timeAlive%15<10) spr.x = 10*32;
@@ -153,9 +165,24 @@ sf::Vector2f Enemy::getSprite(){
                 spr.x = (timeAlive-55)/10*32;
             }
         }
-        else if (type==3) {
+        else if (type==3){
         
             if (timeAlive<100 or timeAlive>200) spr.x = timeAlive%4*32;
+            else spr.x = (timeAlive/2)%4*32;
+            
+        }
+        else if (type==4){
+            
+            if (timeAlive<90 or timeAlive>310){
+                if (timeAlive%15<5) spr.x = 9*32;
+                else if (timeAlive%15<10) spr.x = 10*32;
+                else spr.x = 11*32;
+            }
+            else if (timeAlive<92 or timeAlive>308) spr.x = 7*32;
+            else if (timeAlive<94 or timeAlive>306) spr.x = 6*32;
+            else if (timeAlive<96 or timeAlive>304) spr.x = 5*32;
+            else if (timeAlive<98 or timeAlive>302) spr.x = 4*32;
+            else if (timeAlive<100 or timeAlive>300) spr.x = 3*32;
             else spr.x = (timeAlive/2)%4*32;
             
         }
@@ -168,10 +195,12 @@ void Enemy::getsHit(){
     if (hp>0){
         if (type!=3){
             hp--;
-        } else if (timeAlive>200){
+        }
+        else if (timeAlive>200){
             hp--;
         }
     }
+    
 }
 
 bool Enemy::isDead(){
@@ -196,11 +225,11 @@ bool Enemy::in_bounds(){
     return(pos.x >= -16 and pos.x <= 416 and pos.y >= -16 and pos.y <= 616);
 }
 
+//-----------------------------------PRIVATES---------------------------------------
+
 bool Enemy::in_bounds_shoot(){
     return(pos.x >= 0 and pos.x <= 400 and pos.y >= 0 and pos.y <= 600);
 }
-
-//-----------------------------------PRIVATES---------------------------------------
 
 bool Enemy::canShoot(){
     
@@ -208,13 +237,16 @@ bool Enemy::canShoot(){
     if (type==1){
         if (timeAlive>=50 and timeAlive<=100) shootTime = true; 
     }
-    else if (type==2) {
+    else if (type==2){
         if (timeAlive>=50 and timeAlive<=100) shootTime = true;
     }
-    else if (type==3) {
+    else if (type==3){
         if (timeAlive>=100 and timeAlive<=200) shootTime = true;
     }
+    else if (type==4){
+        if ((timeAlive>=100 and timeAlive<=300)) shootTime = true;
+    }
         
-    return (shootTime and shootTimeout==0 and in_bounds_shoot()); // and in_bounds_strict() and shootTimeout==0);
+    return (shootTime and shootTimeout==0 and in_bounds_shoot());
     
 }

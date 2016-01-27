@@ -11,14 +11,22 @@ BulletArray::BulletArray(){
 
 void BulletArray::updateArray(sf::Vector2f playerIs){
     
-    bool can_unpause = false;
+    bool can_unpause14 = false;
+    bool can_unpause15 = false;
     
     for (std::list<Bullet>::iterator it = bullets.begin(); it != bullets.end(); it++){
         if ((*it).in_bounds()){
             (*it).updateBullet();
-            if ((*it).getType()==15){
-                if ((*it).canUnpause() or can_unpause){
-                    can_unpause = true;
+            int bulletType = (*it).getType();
+            if (bulletType==14){
+                if ((*it).canUnpause() or can_unpause14){
+                    can_unpause14 = true;
+                    (*it).unpause();
+                }
+            }
+            else if (bulletType==15){
+                if ((*it).canUnpause() or can_unpause15){
+                    can_unpause15 = true;
                     (*it).unpause();
                 }
             }
@@ -73,8 +81,8 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 float dify = oy-playerpos.y;
                 double angle = atan(dify/difx);
                 
-                float bvx = (float)10*cos(angle);
-                float bvy = (float)10*sin(angle);
+                float bvx = (float)3*cos(angle);
+                float bvy = (float)3*sin(angle);
                 
                 if (difx >= 0) {
                     bvx = 0-bvx;
@@ -98,14 +106,21 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 
         }
         else if (attack_type==4){
-            
-            double angle = 0.0174533*(stage*10);
-            float bvx = (float)cos(angle);
-            float bvy = (float)sin(angle);
-            Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type);
-            bullets.push_back(newEnemyBullet);
-            
-            
+            for (int i=0;i<4;i++){
+                double angle = 0.0174533*(stage*10+90*i);
+                double angle2 = -0.0174533*(stage*10+90*i+5);
+                
+                float bvx = (float)2*cos(angle);
+                float bvy = (float)2*sin(angle);
+                
+                float bvx2 = (float)2*cos(angle2);
+                float bvy2 = (float)2*sin(angle2);
+                
+                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type);
+                Bullet newEnemyBullet2(ox,oy,bvx2,bvy2,false,10+bullet_type+1);
+                bullets.push_back(newEnemyBullet);
+                bullets.push_back(newEnemyBullet2);
+            }
         }
     }
 }
