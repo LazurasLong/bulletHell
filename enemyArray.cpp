@@ -5,7 +5,7 @@
 
 EnemyArray::EnemyArray(){
     
-    routineTime = 100;
+    routineTime = 50;
     routineType = 0;
     
 }
@@ -42,8 +42,8 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
             //1
             //2
             //3
-            //4
-            rand()%4+1
+            4
+            //rand()%4+1
             );
     }
     updateRoutine();

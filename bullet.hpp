@@ -6,7 +6,7 @@ class Bullet
 {
 public:
     
-    Bullet(float,float,float,float,bool,int);
+    Bullet(float,float,float,float,bool,int,int);
     ~Bullet();
     void updateBullet();
     bool in_bounds();
@@ -19,14 +19,17 @@ public:
     void unpause();
     
     sf::Vector2f pos;
+    void newPlayerPos17(sf::Vector2f);
 
 private:
     int type;
     int time;
+    int modifier;
     bool friendly;
     bool paused;
     bool bounce;
     sf::Vector2f vel;
+    sf::Vector2f plpos;
     
 };
 

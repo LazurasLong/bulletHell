@@ -30,12 +30,18 @@ void BulletArray::updateArray(sf::Vector2f playerIs){
                     (*it).unpause();
                 }
             }
+            
+            if (bulletType==17){
+                (*it).newPlayerPos17(playerIs);
+            }
+            
             /*if ((*it).isFriendly() and enemyArray.collides((*it).pos.x,(*it).pos.y)){
                 bullets.erase(it);
                 it--;
             } else if (!(*it).isFriendly() and (*it).collides(playerpos.x,playerpos.y)){
                 game.over();
             }*/
+            
         } else {
             bullets.erase(it);
             it--;
@@ -52,7 +58,7 @@ void BulletArray::updateArray(sf::Vector2f playerIs){
 void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, int attack_type, int stage){
     
     if (player){
-        Bullet newPlayerBullet(ox,oy-40,0,-15,true,bullet_type);
+        Bullet newPlayerBullet(ox,oy-40,0,-15,true,bullet_type,0);
         bullets.push_back(newPlayerBullet);
     } else {
         //angle = 0.0174533*DEGREES
@@ -72,7 +78,7 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 bvy = 0-bvy;
             }
             
-            Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type+10);
+            Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type+10,0);
             bullets.push_back(newEnemyBullet);
         }
         else if (attack_type==2){
@@ -89,7 +95,7 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                     bvy = 0-bvy;
                 }
                 
-                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type+10);
+                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type+10,0);
                 bullets.push_back(newEnemyBullet);
             }
         }
@@ -99,8 +105,8 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 float bvx = (float)5*cos(angle);
                 float bvy = (float)5*sin(angle);
                 
-                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type);
-                Bullet newEnemyBullet2(ox,oy,-bvx,bvy,false,10+bullet_type);
+                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type,0);
+                Bullet newEnemyBullet2(ox,oy,-bvx,bvy,false,10+bullet_type,0);
                 bullets.push_back(newEnemyBullet);
                 bullets.push_back(newEnemyBullet2);
                 
@@ -116,10 +122,18 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 float bvx2 = (float)2*cos(angle2);
                 float bvy2 = (float)2*sin(angle2);
                 
-                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type);
-                Bullet newEnemyBullet2(ox,oy,bvx2,bvy2,false,10+bullet_type+1);
+                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type,0);
+                Bullet newEnemyBullet2(ox,oy,bvx2,bvy2,false,10+bullet_type+1,0);
                 bullets.push_back(newEnemyBullet);
                 bullets.push_back(newEnemyBullet2);
+            }
+        }
+        else if (attack_type==5){
+            for (int i=0;i<6;i++){
+                for (int j=0;j<6;j++){
+                    Bullet newEnemyBullet(ox,oy,playerpos.x,playerpos.y,false,17,i*10+j);
+                    bullets.push_back(newEnemyBullet);
+                }
             }
         }
     }

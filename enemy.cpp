@@ -20,7 +20,6 @@ Enemy::Enemy(int t, bool m, int mod){
     if (t==1) hp = 1;
     else if (t==2) hp = 1;
     else if (t==3) hp = 5;
-    else if (t==4) hp = 20;
     
 }
 
@@ -99,12 +98,18 @@ void Enemy::shoot(BulletArray &bullets){
             stage++;
             shootTimeout = 1;
         }
-        else if (type==4){
+        else if (type==5){
+
             if (stage<=9) bullets.addBullet(false,pos.x,pos.y,5,type,stage);
             if (timeAlive>=100 and timeAlive<=300) stage++;
             if (timeAlive==200) stage=0;
             shootTimeout = 0;
         }
+        else if (type==4){
+            bullets.addBullet(false,pos.x,pos.y,6,5,stage);
+            shootTimeout = 1000;
+        }
+            
     } else if (shootTimeout > 0){
         shootTimeout--;
     }
@@ -193,10 +198,10 @@ sf::Vector2f Enemy::getSprite(){
 void Enemy::getsHit(){
     
     if (hp>0){
-        if (type!=3){
-            hp--;
+        if (type==3){
+            if (timeAlive>200) hp--;
         }
-        else if (timeAlive>200){
+        else if (type!=4){
             hp--;
         }
     }

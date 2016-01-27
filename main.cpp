@@ -59,6 +59,7 @@ int main(){
     int bgpos = 0;
     
     while (window.isOpen()){
+        
         bgpos++;
         
         sf::Event event;
@@ -119,9 +120,7 @@ int main(){
         }
         
         for (int i = 0;i<bullets.amountBullets();i++){ //Draw bullets
-            sf::Vector2f bullet_Position;
-            bullet_Position = bullets.getBulletPos(i);
-            bulletImg.setPosition(bullet_Position);
+
             if (bullets.isFriendly(i)) {
                 bulletImg.setTextureRect(sf::IntRect(64+12*7,160,12,12));
             } else {
@@ -130,7 +129,10 @@ int main(){
                 else bulletImg.setTextureRect(sf::IntRect(64+12*(bulletType-10),172,12,12));
                 bulletImg.setOrigin(6,6);
             }
-            
+            sf::Vector2f bullet_Position;
+            bullet_Position = bullets.getBulletPos(i);
+            bulletImg.setPosition(bullet_Position);
+
             window.draw(bulletImg);
         }
 

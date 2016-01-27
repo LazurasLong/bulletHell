@@ -1,8 +1,9 @@
 #include "bullet.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <cmath>
 
-Bullet::Bullet(float x, float y, float xvel, float yvel, bool playerShot, int bullet_type){
+Bullet::Bullet(float x, float y, float xvel, float yvel, bool playerShot, int bullet_type, int mod){
     
     pos.x = x;
     pos.y = y;
@@ -11,10 +12,17 @@ Bullet::Bullet(float x, float y, float xvel, float yvel, bool playerShot, int bu
 
     friendly = playerShot;
     type = bullet_type;
+    modifier = mod;
+    
     time = 0;
     paused = false;
     if (type==15 or type==16) bounce = true;
     else bounce = false;
+    
+    if (type==17){
+        plpos.x = (float)xvel;
+        plpos.y = (float)yvel;
+    }
 }
 
 Bullet::~Bullet() {}
@@ -46,8 +54,19 @@ void Bullet::updateBullet(){
             else if (type==16 and time>=10 and time<300) paused = true;
         }
     }
-    else {
-        pos.x += vel.x;
+    else if (type==17){
+        int spd1 = 10, spd2 = 2;
+        int dist1 = 10, dist2 = 50;
+        
+        
+        double angle1 = 0.0174533*(time*spd1+60*(modifier/10));
+        double angle2 = 0.0174533*(time*spd2+60*(modifier%10));
+        
+        pos.x = (float)dist1*cos(angle1)+dist2*cos(angle2)+plpos.x;
+        pos.y = (float)dist1*sin(angle1)+dist2*sin(angle2)+plpos.y;
+    }
+    else{
+        pos.x += vel.x; 
         pos.y += vel.y;
     }
     
@@ -103,7 +122,7 @@ int Bullet::getType(){
 
 bool Bullet::canUnpause(){
 
-    return (paused and time>=100 and time<300);
+    return (paused and time>=50 and time<300);
     
 }
 
@@ -113,5 +132,12 @@ void Bullet::unpause(){
         paused = false;
         time = 300;
     }
+    
+}
+
+
+void Bullet::newPlayerPos17(sf::Vector2f playerpos){
+    
+    vel = playerpos;
     
 }

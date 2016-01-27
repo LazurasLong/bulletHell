@@ -64,7 +64,6 @@ void Character::shoot(BulletArray &bullets){
 
     if (shootTimeout == 0){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
-            
             bullets.addBullet(true,pos.x,pos.y,9,0,0);
             shootTimeout = shootFreq;
         }
