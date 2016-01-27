@@ -74,6 +74,13 @@ void Enemy::move(){
             pos.y = 150+15*sin(0.0175433*(timeAlive-200));
         }
     }
+    else if (type==5){
+        
+        pos.x = timeAlive*20/9;
+        pos.y = 500*sin(0.0174533*timeAlive);
+        if (mirror) pos.y = 600-pos.y;
+        
+    }
         
     if (mirror){
         pos.x = 400-pos.x;
@@ -98,18 +105,17 @@ void Enemy::shoot(BulletArray &bullets){
             stage++;
             shootTimeout = 1;
         }
-        else if (type==5){
+        else if (type==4){
 
             if (stage<=9) bullets.addBullet(false,pos.x,pos.y,5,type,stage);
             if (timeAlive>=100 and timeAlive<=300) stage++;
             if (timeAlive==200) stage=0;
             shootTimeout = 0;
         }
-        else if (type==4){
+        else if (type==5){
+            if (mirror) bullets.addBullet(false,pos.x,pos.y,6,5,2); //Stage 2 with bullet 17 => mirror
             bullets.addBullet(false,pos.x,pos.y,6,5,stage);
-            shootTimeout = 1000;
         }
-            
     } else if (shootTimeout > 0){
         shootTimeout--;
     }
@@ -239,6 +245,7 @@ bool Enemy::in_bounds_shoot(){
 bool Enemy::canShoot(){
     
     bool shootTime = false;
+    
     if (type==1){
         if (timeAlive>=50 and timeAlive<=100) shootTime = true; 
     }
@@ -250,6 +257,9 @@ bool Enemy::canShoot(){
     }
     else if (type==4){
         if ((timeAlive>=100 and timeAlive<=300)) shootTime = true;
+    }
+    else if (type==5){
+        if (timeAlive==5) shootTime = true;
     }
         
     return (shootTime and shootTimeout==0 and in_bounds_shoot());

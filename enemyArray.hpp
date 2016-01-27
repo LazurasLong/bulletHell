@@ -25,11 +25,13 @@ private:
     std::list<Enemy> enemies;
     sf::Vector2f playerpos;
     int routineTime;
+    int stdTime;
     int routineType;
+    int stagesCleared;
     void startRoutine(int);
     void updateRoutine();
     bool routineEnded();
-    bool canEnd();
+    bool canStart();
 };
 
 

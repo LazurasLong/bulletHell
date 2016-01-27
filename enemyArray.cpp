@@ -6,24 +6,47 @@
 EnemyArray::EnemyArray(){
     
     routineTime = 50;
+    stdTime = 50;
     routineType = 0;
+    
+    stagesCleared = 0;
     
 }
 
 void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
-        
-    if (enemies.size()>0){
+    
+
+    if (playerAlive){
+        if (canStart()){
+            if (stagesCleared<5){
+                if (routineEnded()) {
+                    stagesCleared++;
+                    startRoutine(stagesCleared);
+                }
+            }
+            else {
+                stagesCleared++;
+                startRoutine(
+                    //1
+                    //2
+                    //3
+                    //4
+                    //5
+                    rand()%5+1
+                    );
+            }
+        }
+    }
+    if (enemies.size()>0){ //Check for collisions
         for (std::list<Enemy>::iterator it = enemies.begin(); it != enemies.end(); it++){
             if ((*it).in_bounds() or ((*it).pos.x == -50 and (*it).pos.y == -50)){
                 (*it).update(bullets);
-                
                 if (not (*it).isDead()){
                     if (bullets.collides((*it).pos,false)){
                         (*it).getsHit();
                         //Play sound
                         it--;
                     }
-                    
                 }
                 else if ((*it).canDelete()){
                     enemies.erase(it);
@@ -34,18 +57,7 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
                 it--;
             }
         }
-    } else if (/*canEnd()){
-        startRoutine(0);
-    } else if (routineEnded() and*/ playerAlive){
-
-        startRoutine(
-            //1
-            //2
-            //3
-            4
-            //rand()%4+1
-            );
-    }
+    } 
     updateRoutine();
 
 }
@@ -89,12 +101,13 @@ bool EnemyArray::routineEnded(){
 void EnemyArray::startRoutine(int type){
     
     routineType = type;
-    //std::cout << type << std::endl;
-    if (type==0) routineTime = 50;
-    else if (type==1) routineTime = 500;
-    else if (type==2) routineTime = 500;
-    else if (type==3) routineTime = 500;
-    else if (type==4) routineTime = 750;
+    
+    if (type==0) routineTime = stdTime;
+    else if (type==1) routineTime = stdTime*10;
+    else if (type==2) routineTime = stdTime*10;
+    else if (type==3) routineTime = stdTime*10;
+    else if (type==4) routineTime = stdTime*13;
+    else if (type==5) routineTime = stdTime*5;
 
     std::cout << "routine started " << routineType << " " << routineTime << std::endl;
     
@@ -102,21 +115,20 @@ void EnemyArray::startRoutine(int type){
 
 void EnemyArray::updateRoutine(){
     
-    //  if (routineType==0);
     if (routineType==1){
-        if (routineTime==500){
+        if (routineTime==stdTime*10){
             Enemy newEnemy(1,false,0);
             Enemy newEnemy2(1,true,0);
             enemies.push_back(newEnemy);
             enemies.push_back(newEnemy2);
         }
-        else if (routineTime==450){
+        else if (routineTime==stdTime*9){
             Enemy newEnemy(1,false,1);
             Enemy newEnemy2(1,true,1);
             enemies.push_back(newEnemy);
             enemies.push_back(newEnemy2);
         }
-        else if (routineTime==400){
+        else if (routineTime==stdTime*8){
             Enemy newEnemy(1,false,2);
             Enemy newEnemy2(1,true,2);
             enemies.push_back(newEnemy);
@@ -124,21 +136,21 @@ void EnemyArray::updateRoutine(){
         }
     }
     else if (routineType==2){
-        if (routineTime==500 or routineTime==400 or routineTime==300){
+        if (routineTime==stdTime*10 or routineTime==stdTime*8 or routineTime==stdTime*6){
             Enemy newEnemy(2,false,0);
             enemies.push_back(newEnemy);
         }
-        else if (routineTime==450 or routineTime==350 or routineTime==250){
+        else if (routineTime==stdTime*9 or routineTime==stdTime*7 or routineTime==stdTime*10*5){
             Enemy newEnemy(2,true,0);
             enemies.push_back(newEnemy);
         }
     }
     else if (routineType==3){
-        if (routineTime==500){
+        if (routineTime==stdTime*10){
             Enemy newEnemy(3,false,1);
             enemies.push_back(newEnemy);
         }
-        else if (routineTime==450){
+        else if (routineTime==stdTime*9){
             Enemy newEnemy(3,false,0);
             Enemy newEnemy2(3,false,2);
             enemies.push_back(newEnemy);
@@ -146,23 +158,32 @@ void EnemyArray::updateRoutine(){
         }
     }
     else if (routineType==4){
-        if (routineTime==750){
+        if (routineTime==stdTime*10){
             Enemy newEnemy(4,false,0);
             enemies.push_back(newEnemy);
         }
         
+    }
+    else if (routineType==5){
+        if (routineTime==stdTime*5){
+            Enemy newEnemy(5,false,0);
+            Enemy newEnemy2(5,true,0);
+            enemies.push_back(newEnemy);
+            enemies.push_back(newEnemy2);
+        }
     }
     
     if (routineTime!=0) routineTime--;
     
 }
 
-bool EnemyArray::canEnd(){
+bool EnemyArray::canStart(){
     
-    if (routineType==1 and routineTime<350) return true;
-    else if (routineType==2 and routineTime<250) return true;
-    else if (routineType==3 and routineTime<300) return true;
-    else if (routineType==4 and routineTime < 500) return true;
+    if (routineEnded()) return true;
+    else if (routineType==1 and routineTime<stdTime*8) return true;
+    else if (routineType==2 and routineTime<stdTime*5) return true;
+    else if (routineType==3 and routineTime<stdTime*10) return true;
+    else if (routineType==4 and routineTime<stdTime*5) return true;
     else return false;
     
 }

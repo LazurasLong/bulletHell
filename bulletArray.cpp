@@ -31,10 +31,6 @@ void BulletArray::updateArray(sf::Vector2f playerIs){
                 }
             }
             
-            if (bulletType==17){
-                (*it).newPlayerPos17(playerIs);
-            }
-            
             /*if ((*it).isFriendly() and enemyArray.collides((*it).pos.x,(*it).pos.y)){
                 bullets.erase(it);
                 it--;
@@ -131,7 +127,8 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
         else if (attack_type==5){
             for (int i=0;i<6;i++){
                 for (int j=0;j<6;j++){
-                    Bullet newEnemyBullet(ox,oy,playerpos.x,playerpos.y,false,17,i*10+j);
+                    //Spaghetti code, stage as vel.x since it isn't used for bullet 17. Indicates mirror enemy
+                    Bullet newEnemyBullet(ox,oy,(float)stage,0,false,17,i*10+j);
                     bullets.push_back(newEnemyBullet);
                 }
             }

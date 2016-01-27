@@ -7,8 +7,8 @@ Bullet::Bullet(float x, float y, float xvel, float yvel, bool playerShot, int bu
     
     pos.x = x;
     pos.y = y;
-    vel.x = (float)xvel;
-    vel.y = (float)yvel;
+    vel.x = xvel;
+    vel.y = yvel;
 
     friendly = playerShot;
     type = bullet_type;
@@ -18,11 +18,7 @@ Bullet::Bullet(float x, float y, float xvel, float yvel, bool playerShot, int bu
     paused = false;
     if (type==15 or type==16) bounce = true;
     else bounce = false;
-    
-    if (type==17){
-        plpos.x = (float)xvel;
-        plpos.y = (float)yvel;
-    }
+
 }
 
 Bullet::~Bullet() {}
@@ -54,16 +50,24 @@ void Bullet::updateBullet(){
             else if (type==16 and time>=10 and time<300) paused = true;
         }
     }
-    else if (type==17){
-        int spd1 = 10, spd2 = 2;
+    else if (type==17 or type==18){
+        int spd1 = 10, spd2 = 5;
         int dist1 = 10, dist2 = 50;
+        int axisX = (time+5)*20/9, axisY = 500*sin(0.0174533*(time+5));
         
+        if (vel.x == 2) { //Mirrored enemy, spaghetti code
+            axisX = 400-axisX;
+            axisY = 600-axisY;
+        }
+        
+        
+        if (time<20) dist2 = time*2.5;
         
         double angle1 = 0.0174533*(time*spd1+60*(modifier/10));
         double angle2 = 0.0174533*(time*spd2+60*(modifier%10));
         
-        pos.x = (float)dist1*cos(angle1)+dist2*cos(angle2)+plpos.x;
-        pos.y = (float)dist1*sin(angle1)+dist2*sin(angle2)+plpos.y;
+        pos.x = (float)dist1*cos(angle1)+dist2*cos(angle2)+axisX;
+        pos.y = (float)dist1*sin(angle1)+dist2*sin(angle2)+axisY;
     }
     else{
         pos.x += vel.x; 
@@ -110,15 +114,10 @@ bool Bullet::collides(float centerx,float centery,bool player){
 
 int Bullet::getType(){
     
-    return type-1;
+    if (type==17 or type==18) return 16;
+    else return type-1;
     
 }
-
-/*int Bullet::getTime(){
-    
-    return time;
-    
-}*/
 
 bool Bullet::canUnpause(){
 
@@ -132,12 +131,5 @@ void Bullet::unpause(){
         paused = false;
         time = 300;
     }
-    
-}
-
-
-void Bullet::newPlayerPos17(sf::Vector2f playerpos){
-    
-    vel = playerpos;
     
 }

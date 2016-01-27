@@ -19,7 +19,6 @@ public:
     void unpause();
     
     sf::Vector2f pos;
-    void newPlayerPos17(sf::Vector2f);
 
 private:
     int type;
@@ -29,7 +28,6 @@ private:
     bool paused;
     bool bounce;
     sf::Vector2f vel;
-    sf::Vector2f plpos;
     
 };
 
