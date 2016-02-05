@@ -8,7 +8,7 @@ public:
 
   Game(sf::RenderWindow* window);
   void play();
-  //void practice(int);
+  void practice(int);
   
 private:  
   

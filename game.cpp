@@ -136,3 +136,6 @@ void Game::play(){
         _myWindow->display();
     }
 }
+
+void Game::practice(int stage){
+}

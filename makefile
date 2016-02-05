@@ -24,4 +24,3 @@ enemyArray.o: enemyArray.cpp
 clean:
 	rm *.o
 	rm bulletHell
-	rm bulletHell.exe
