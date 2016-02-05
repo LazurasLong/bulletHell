@@ -1,8 +1,10 @@
-#include <SFML/Graphics.hpp>
-#include "character.hpp"
-#include "bullet.hpp"
-#include <iostream>
-#include <list>
+//#include <SFML/Graphics.hpp>
+//#include "character.hpp"
+//#include "bullet.hpp"
+//#include <iostream>
+//#include <list>
+
+#include "utils.hpp"
 
 
 Character::Character(sf::Sprite &player){
@@ -13,8 +15,8 @@ Character::Character(sf::Sprite &player){
     player.setTextureRect(sf::IntRect(sprx,spry,16,45));
     player.setOrigin(8,17);
     
-    pos.x = 200;
-    pos.y = 500;
+    pos.x = W_WIDTH/2;
+    pos.y = W_HEIGHT-100;
     
     timeAlive=0;
     shootTimeout = 0;
@@ -36,7 +38,7 @@ void Character::move(sf::Sprite &player){
     
     //X
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-        if (pos.x <= 400-travelpos-16) pos.x += travelpos;
+        if (pos.x <= W_WIDTH-travelpos-16) pos.x += travelpos;
         spry = 64;
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
         if (pos.x >= travelpos+16) pos.x -= travelpos;
@@ -54,7 +56,7 @@ void Character::move(sf::Sprite &player){
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
         if (pos.y >= travelpos+32) pos.y -= travelpos;
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-        if (pos.y <= 600-travelpos-32) pos.y += travelpos;
+        if (pos.y <= W_HEIGHT-travelpos-32) pos.y += travelpos;
     }
 
 }

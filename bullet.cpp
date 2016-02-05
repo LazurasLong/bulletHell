@@ -1,7 +1,8 @@
-#include "bullet.hpp"
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <cmath>
+//#include "bullet.hpp"
+//#include <SFML/Graphics.hpp>
+//#include <iostream>
+//#include <cmath>
+#include "utils.hpp"
 
 Bullet::Bullet(float x, float y, float xvel, float yvel, bool playerShot, int bullet_type, int mod){
     
@@ -30,7 +31,7 @@ void Bullet::updateBullet(){
             pos.x += vel.x;
             pos.y += vel.y;
             if (bounce){
-                if(pos.x>=400){
+                if(pos.x>=W_WIDTH){
                     vel.x = -vel.x;
                     pos.x += vel.x;
                     bounce = false;
@@ -56,8 +57,8 @@ void Bullet::updateBullet(){
         int axisX = (time+5)*20/9, axisY = 500*sin(0.0174533*(time+5));
         
         if (vel.x == 2) { //Mirrored enemy, spaghetti code
-            axisX = 400-axisX;
-            axisY = 600-axisY;
+            axisX = W_WIDTH-axisX;
+            axisY = W_HEIGHT-axisY;
         }
         
         
@@ -78,7 +79,7 @@ void Bullet::updateBullet(){
 }
 
 bool Bullet::in_bounds(){
-    return(pos.x >= -10 and pos.x <= 410 and pos.y >= -10 and pos.y <= 610);
+    return(pos.x >= -10 and pos.x <= W_WIDTH+10 and pos.y >= -10 and pos.y <= W_HEIGHT+10);
 }
 
 bool Bullet::isFriendly(){

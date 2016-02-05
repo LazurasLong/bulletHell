@@ -1,7 +1,8 @@
 #ifndef _ENEMY_HPP_
 #define _ENEMY_HPP_
 
-#include "bulletArray.hpp"
+//#include "bulletArray.hpp"
+#include "utils.hpp"
 
 class Enemy
 {

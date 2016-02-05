@@ -1,8 +1,10 @@
-bulletHell: main.o character.o bullet.o bulletArray.o enemy.o enemyArray.o
-	g++ main.o character.o bullet.o bulletArray.o enemy.o enemyArray.o -o bulletHell -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
+bulletHell: main.o game.o character.o bullet.o bulletArray.o enemy.o enemyArray.o
+	g++ main.o game.o character.o bullet.o bulletArray.o enemy.o enemyArray.o -o bulletHell -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
 
 main.o: main.cpp
 	g++ -c main.cpp
+game.o: game.cpp
+	g++ -c game.cpp
 	
 character.o: character.cpp
 	g++ -c character.cpp
@@ -22,3 +24,4 @@ enemyArray.o: enemyArray.cpp
 clean:
 	rm *.o
 	rm bulletHell
+	rm bulletHell.exe

@@ -1,9 +1,9 @@
-#include <SFML/Graphics.hpp>
-#include <cmath>
-#include "enemy.hpp"
-#include "bullet.hpp"
-#include "bulletArray.hpp"
-
+//#include <SFML/Graphics.hpp>
+//#include <cmath>
+//#include "enemy.hpp"
+//#include "bullet.hpp"
+//#include "bulletArray.hpp"
+#include "utils.hpp"
 
 Enemy::Enemy(int t, bool m, int mod){
     
@@ -59,7 +59,7 @@ void Enemy::move(){
     }
     else if (type==3){
         
-        pos.x = 100+modified*100;
+        pos.x = W_WIDTH/4+modified*W_WIDTH/4;
         if (timeAlive<100) pos.y = timeAlive*2;
         else if (timeAlive>200) pos.y = (timeAlive-100)*2;
         
@@ -83,7 +83,7 @@ void Enemy::move(){
     }
         
     if (mirror){
-        pos.x = 400-pos.x;
+        pos.x = W_WIDTH-pos.x;
     }
 }
 
@@ -233,13 +233,13 @@ bool Enemy::isMirror(){
 }
 
 bool Enemy::in_bounds(){
-    return(pos.x >= -16 and pos.x <= 416 and pos.y >= -16 and pos.y <= 616);
+    return(pos.x >= -16 and pos.x <= W_WIDTH+16 and pos.y >= -16 and pos.y <= W_HEIGHT+16);
 }
 
 //-----------------------------------PRIVATES---------------------------------------
 
 bool Enemy::in_bounds_shoot(){
-    return(pos.x >= 0 and pos.x <= 400 and pos.y >= 0 and pos.y <= 600);
+    return(pos.x >= 0 and pos.x <= W_WIDTH and pos.y >= 0 and pos.y <= W_HEIGHT);
 }
 
 bool Enemy::canShoot(){

@@ -1,7 +1,8 @@
 #ifndef _CHARACTER_HPP_
 #define _CHARACTER_HPP_
-#include "bullet.hpp"
-#include "bulletArray.hpp"
+//#include "bullet.hpp"
+//#include "bulletArray.hpp"
+#include "utils.hpp"
 
 class Character
 {

@@ -1,7 +1,7 @@
-#include <SFML/Graphics.hpp>
-#include "enemy.hpp"
-#include "enemyArray.hpp"
-
+//#include <SFML/Graphics.hpp>
+//#include "enemy.hpp"
+//#include "enemyArray.hpp"
+#include "utils.hpp"
 
 EnemyArray::EnemyArray(){
     
@@ -9,34 +9,12 @@ EnemyArray::EnemyArray(){
     stdTime = 50;
     routineType = 0;
     
-    stagesCleared = 0;
+    stagesCleared = 5;
     
 }
 
 void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
     
-
-    if (playerAlive){
-        if (canStart()){
-            if (stagesCleared<5){
-                if (routineEnded()) {
-                    stagesCleared++;
-                    startRoutine(stagesCleared);
-                }
-            }
-            else {
-                stagesCleared++;
-                startRoutine(
-                    //1
-                    //2
-                    //3
-                    //4
-                    //5
-                    rand()%5+1
-                    );
-            }
-        }
-    }
     if (enemies.size()>0){ //Check for collisions
         for (std::list<Enemy>::iterator it = enemies.begin(); it != enemies.end(); it++){
             if ((*it).in_bounds() or ((*it).pos.x == -50 and (*it).pos.y == -50)){
@@ -58,8 +36,28 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
             }
         }
     } 
-    updateRoutine();
-
+    if (playerAlive){
+        if (canStart()){
+            if (stagesCleared<5){
+                if (routineEnded()) {
+                    stagesCleared++;
+                    startRoutine(stagesCleared);
+                }
+            }
+            else {
+                stagesCleared++;
+                startRoutine(
+                    //1
+                    //2
+                    //3
+                    //4
+                    //5
+                    rand()%5+1
+                    );
+            }
+        }
+        updateRoutine();
+    }
 }
 
 sf::Vector2f EnemyArray::getEnemyPos(int i){
@@ -158,7 +156,7 @@ void EnemyArray::updateRoutine(){
         }
     }
     else if (routineType==4){
-        if (routineTime==stdTime*10){
+        if (routineTime==stdTime*13){
             Enemy newEnemy(4,false,0);
             enemies.push_back(newEnemy);
         }
@@ -180,10 +178,10 @@ void EnemyArray::updateRoutine(){
 bool EnemyArray::canStart(){
     
     if (routineEnded()) return true;
-    else if (routineType==1 and routineTime<stdTime*8) return true;
-    else if (routineType==2 and routineTime<stdTime*5) return true;
-    else if (routineType==3 and routineTime<stdTime*10) return true;
-    else if (routineType==4 and routineTime<stdTime*5) return true;
+    else if (routineType==1 and routineTime<stdTime*4) return true;
+    else if (routineType==2 and routineTime<stdTime*2) return true;
+    else if (routineType==3 and routineTime<stdTime*3) return true;
+    else if (routineType==4 and routineTime<stdTime) return true;
     else return false;
     
 }

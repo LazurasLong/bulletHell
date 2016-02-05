@@ -1,9 +1,11 @@
 #ifndef _EARRAY_HPP_
 #define _EARRAY_HPP_
 
-#include <iostream>
-#include <list>
-#include "enemy.hpp"
+//#include <iostream>
+//#include <list>
+//#include "enemy.hpp"
+
+#include "utils.hpp"
 
 class EnemyArray
 {
@@ -19,7 +21,7 @@ public:
     sf::Vector2f getSpritePos(int);
     
     bool isMirror(int);
-    
+
 private:
     
     std::list<Enemy> enemies;
