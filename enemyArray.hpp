@@ -21,7 +21,11 @@ public:
     sf::Vector2f getSpritePos(int);
     
     bool isMirror(int);
-
+    
+    void startPractice(int);
+    void updatePractice(BulletArray &bullets,bool);
+    bool finishPractice();
+    
 private:
     
     std::list<Enemy> enemies;

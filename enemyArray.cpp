@@ -60,6 +60,41 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
     }
 }
 
+void EnemyArray::startPractice(int stage){
+    
+    if (enemies.size()==0){
+	print_error("startPractice ok");
+	startRoutine(stage);
+    }
+    
+}
+
+void EnemyArray::updatePractice(BulletArray &bullets, bool playerAlive){
+    
+    if (enemies.size()>0){ //Check for collisions
+        for (std::list<Enemy>::iterator it = enemies.begin(); it != enemies.end(); it++){
+            if ((*it).in_bounds() or ((*it).pos.x == -50 and (*it).pos.y == -50)){
+                (*it).update(bullets);
+                if (not (*it).isDead()){
+                    if (bullets.collides((*it).pos,false)){
+                        (*it).getsHit();
+                        //Play sound
+                        it--;
+                    }
+                }
+                else if ((*it).canDelete()){
+                    enemies.erase(it);
+                    it--;
+                }
+            } else {
+                enemies.erase(it);
+                it--;
+	    }
+	}
+    }
+    updateRoutine();
+}
+
 sf::Vector2f EnemyArray::getEnemyPos(int i){
     
     std::list<Enemy>::iterator it = enemies.begin();
@@ -205,5 +240,11 @@ bool EnemyArray::isMirror(int i){
         it++;
     }
     return (*it).isMirror();
+    
+}
+
+bool EnemyArray::finishPractice(){
+    
+    return (enemies.size() == 0 and routineEnded());
     
 }

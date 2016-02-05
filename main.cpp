@@ -14,6 +14,7 @@ void menu(){
     sf::RectangleShape menuBG(sf::Vector2f(W_WIDTH,W_HEIGHT));
 	menuBG.setTexture(&menuTexture);
     int selection = 0;
+    int selectPractice = 0;
     bool onPractice = false;
     
     while (window.isOpen()){
@@ -24,7 +25,7 @@ void menu(){
 	while (window.pollEvent(event)){
 	    if (event.type == sf::Event::Closed) window.close();
             if (event.type == sf::Event::KeyPressed){
-		if (not onPractice){
+		if (not onPractice){ //On main menu
 		    if (event.key.code == sf::Keyboard::Return){
 			if (selection==0){
 			    Game game(&window);
@@ -32,6 +33,7 @@ void menu(){
 			}
 			else if (selection==1){
 			    onPractice = true;
+			    selectPractice = 0;
 			    //Move buttons
 			}
 			else if (selection==2){
@@ -40,23 +42,28 @@ void menu(){
 		    } else if (event.key.code == sf::Keyboard::Escape){
 			    window.close();
 		    }
+		    if (event.key.code == sf::Keyboard::Down or event.key.code == sf::Keyboard::Right){
+			selection = (selection+1)%3;
+		    }
+		    else if (event.key.code == sf::Keyboard::Up or event.key.code == sf::Keyboard::Left){
+			selection = (selection-1)%3;
+		    }
 		}
 		else { //On practice menu
 		    if (event.key.code == sf::Keyboard::Return){
 			Game game(&window);
-			game.practice(selection+1);
+			game.practice(selectPractice+1);
 		    }
 		    else if (event.key.code == sf::Keyboard::Escape){
 			onPractice = false;
 		    }
+		    if (event.key.code == sf::Keyboard::Down or event.key.code == sf::Keyboard::Right){
+			selectPractice = (selectPractice+1)%5;
+		    }
+		    else if (event.key.code == sf::Keyboard::Up or event.key.code == sf::Keyboard::Left){
+			selectPractice = (selectPractice-1)%5;
+		    } 
 		}
-		
-		if (event.key.code == sf::Keyboard::Down or event.key.code == sf::Keyboard::Right){
-		    selection = (selection+1)%3;
-		}
-		else if (event.key.code == sf::Keyboard::Up or event.key.code == sf::Keyboard::Left){
-		    selection = (selection-1)%3;
-		} 
 	    }
 	}
 	
