@@ -31,6 +31,10 @@ void menu(){
     int selectPractice = 0;
     bool onPractice = false;
     
+	sf::Vector2i grabbedOffset;
+    bool grabbedWindow = false;
+	
+	
     while (window.isOpen()){
 		window.clear();
 		window.draw(menuBG);
@@ -40,7 +44,7 @@ void menu(){
 		sf::Event event;
 		while (window.pollEvent(event)){
 			if (event.type == sf::Event::Closed) window.close();
-				if (event.type == sf::Event::KeyPressed){
+			else if (event.type == sf::Event::KeyPressed){
 				if (not onPractice){ //On main menu
 					if (event.key.code == sf::Keyboard::Return){
 					if (selection==0){
@@ -105,9 +109,18 @@ void menu(){
 					} 
 				}
 			}
+			else if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (event.mouseButton.button == sf::Mouse::Left) grabbedOffset = window.getPosition() - sf::Mouse::getPosition();
+            }
+			
 		}
+		grabbedWindow = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+        if (grabbedWindow) window.setPosition(sf::Mouse::getPosition() + grabbedOffset);
+
+        window.display();
 		
-		window.display();
+		
     }
   
 }
