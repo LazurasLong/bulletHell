@@ -28,6 +28,13 @@ void Game::play(){
 	 
 	sf::RectangleShape Gbackground(sf::Vector2f(W_WIDTH,W_HEIGHT));
 	  Gbackground.setTexture(&gameBG);
+	  
+	sf::RectangleShape Fade(sf::Vector2f(W_WIDTH,W_HEIGHT));
+	  Fade.setFillColor(sf::Color(0,0,0,250));
+	sf::RectangleShape Fade2(sf::Vector2f(W_WIDTH,W_HEIGHT));
+	  Fade2.setFillColor(sf::Color(0,0,0,0));
+	  Fade2.setPosition(sf::Vector2f(G_ORIGIN,G_ORIGIN));
+	  Fade2.setSize(sf::Vector2f(G_WIDTH,G_HEIGHT));
     
     sf::Sprite player;
       player.setTexture(spriteTextures);
@@ -46,6 +53,15 @@ void Game::play(){
 		scoreText.setPosition(520,470);
 		scoreText.setColor(sf::Color(0,0,0));
 		scoreText.setStyle(sf::Text::Bold);
+	sf::Text exitText;
+		exitText.setFont(font);
+		exitText.setCharacterSize(25);
+		exitText.setPosition(G_ORIGIN+85,G_ORIGIN+290);
+		exitText.setColor(sf::Color(255,255,255));
+		exitText.setStyle(sf::Text::Bold);
+		std::ostringstream os;
+		os << "Press any key to exit";
+		exitText.setString(os.str());
     
     BulletArray bullets;
     sf::Sprite bulletImg;
@@ -60,13 +76,18 @@ void Game::play(){
     //Vy = V*sin(z)
     
     bool alive = true;
+	int timeDead = 0;
     int bgpos = 0;
     bool canExit = false;
+	bool exited = false;
 	double score = 0;
+	int fadeAmount = 0;
     
     while (_myWindow->isOpen() and not canExit){
         
+
         bgpos++;
+		if (!alive) timeDead++;
 		//score++;
         _myWindow->clear();
 	
@@ -88,6 +109,9 @@ void Game::play(){
                 if (gameEvent.key.code == sf::Keyboard::Escape){
                     canExit = true;
                 }
+                else {
+					if (not alive and timeDead>100) exited = true;
+				}
             }
         }
         
@@ -145,19 +169,40 @@ void Game::play(){
                 focusPoint.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
                 _myWindow->draw(focusPoint);
             }
-        } else {
-	    if (enemies.amountEnemies()==0){
-			print_error("Game over!");
-			canExit = true;
+        }
+        else {
+			//if (fadeAmount>0){
+			//	fadeAmount--;
+			//}
+			//else {
+				if (fadeAmount>0){
+					Fade2.setFillColor(sf::Color(0,0,0,255-fadeAmount));
+					_myWindow->draw(Fade2);
+					fadeAmount-=2;
+				}
+				else {
+					if (not exited){
+						_myWindow->draw(Fade2);						
+						_myWindow->draw(exitText);
+					}
+					else canExit = true;
+				}
+			//}
 	    }
-	}
 		_myWindow->draw(Gbackground);
 		
-		
 		std::ostringstream os;
-		os << "Score:\n     " << score << "\nWaves cleared:\n    " << enemies.getStages();
+		os << "Score:\n     " << score << "\nWaves cleared:\n     " << enemies.getStages();
 		scoreText.setString(os.str());
 		_myWindow->draw(scoreText);
+		
+		
+		if (alive and fadeAmount<255){
+			fadeAmount++;
+			Fade.setFillColor(sf::Color(0,0,0,255-fadeAmount));
+			_myWindow->draw(Fade);
+		}
+
         _myWindow->display();
     }
 }

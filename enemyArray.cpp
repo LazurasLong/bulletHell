@@ -5,7 +5,7 @@
 
 EnemyArray::EnemyArray(){
     
-    routineTime = 50;
+    routineTime = 250;
     stdTime = 50;
     routineType = 0;
     
@@ -58,8 +58,8 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive, double &sco
                     );
             }
         }
-        updateRoutine();
     }
+    updateRoutine();
 }
 
 void EnemyArray::startPractice(int stage){

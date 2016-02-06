@@ -45,19 +45,12 @@ static const char* Menu_Sprites = "./images/MenuSprites.png";
 
 static const char* BG_File1 = "./images/BGTexture.png";
 static const char* BG_File2 = "./images/BGTexture2.png";
-
 static const char* Play_BG = "./images/GameBG.png";
 static const char* Practice_BG = "./images/GameBGPractice.png";
-
 static const char* Sprite_File = "./images/Sprites.png";
 
 static const char* Font_File = "./images/ChaparralPro.ttf";
 
-
-//static const char* file_titleHTP = "./resources/images/howToPlay/howToPlayTitle.png";
-//static const char* file_bgHTP = "./resources/images/howToPlay/bg.png";
-
-//static const std::vector<float> vel = {1.0, 0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1};
 
 static int maxim(int a, int b) {
     return (a>b)?a : b;
