@@ -49,7 +49,7 @@ static const char* Play_BG = "./resources/images/GameBG.png";
 static const char* Practice_BG = "./resources/images/GameBGPractice.png";
 static const char* Sprite_File = "./resources/images/Sprites.png";
 
-static const char* Font_File = "./resources/images/ChaparralPro.ttf";
+static const char* Font_File = "./resources/ChaparralPro.ttf";
 
 
 static int maxim(int a, int b) {
