@@ -38,18 +38,18 @@
 #define APP_NAME "My game"
 using namespace std;
 
-static const char* Menu_File = "./images/MenuBG.png";
-static const char* Menu_Bamboo = "./images/Bamboo.png";
-static const char* Menu_Title = "./images/MenuTitle.png";
-static const char* Menu_Sprites = "./images/MenuSprites.png";
+static const char* Menu_File = "./resources/images/MenuBG.png";
+static const char* Menu_Bamboo = "./resources/images/Bamboo.png";
+static const char* Menu_Title = "./resources/images/MenuTitle.png";
+static const char* Menu_Sprites = "./resources/images/MenuSprites.png";
 
-static const char* BG_File1 = "./images/BGTexture.png";
-static const char* BG_File2 = "./images/BGTexture2.png";
-static const char* Play_BG = "./images/GameBG.png";
-static const char* Practice_BG = "./images/GameBGPractice.png";
-static const char* Sprite_File = "./images/Sprites.png";
+static const char* BG_File1 = "./resources/images/BGTexture.png";
+static const char* BG_File2 = "./resources/images/BGTexture2.png";
+static const char* Play_BG = "./resources/images/GameBG.png";
+static const char* Practice_BG = "./resources/images/GameBGPractice.png";
+static const char* Sprite_File = "./resources/images/Sprites.png";
 
-static const char* Font_File = "./images/ChaparralPro.ttf";
+static const char* Font_File = "./resources/images/ChaparralPro.ttf";
 
 
 static int maxim(int a, int b) {
