@@ -43,9 +43,24 @@ void menu(){
 		menuButton3.setPosition(75,500);
 	sf::Sprite selectButton;
 		selectButton.setTexture(spriTex);
-		selectButton.setTextureRect(sf::IntRect(1290,256,30,75));
+		selectButton.setTextureRect(sf::IntRect(1291,256,30,75));
 		selectButton.setPosition(30,300);
 		
+	sf::Sprite enemyPractice;
+		enemyPractice.setTexture(spriTex);
+		enemyPractice.setTextureRect(sf::IntRect(0,0,397,256));
+		enemyPractice.setPosition(400,350-700);
+		enemyPractice.setOrigin(198,128);
+	sf::Sprite practiceButton1;
+		practiceButton1.setTexture(spriTex);
+		practiceButton1.setTextureRect(sf::IntRect(1241,256,50,75));
+		practiceButton1.setPosition(150,350-700);
+		practiceButton1.setOrigin(25,37);
+	sf::Sprite practiceButton2;
+		practiceButton2.setTexture(spriTex);
+		practiceButton2.setTextureRect(sf::IntRect(1191,256,50,75));
+		practiceButton2.setPosition(650,350-700);
+		practiceButton2.setOrigin(25,37);
     
     int selection = 0;
     int selectPractice = 0;
@@ -60,10 +75,17 @@ void menu(){
 		window.draw(menuBG);
 		window.draw(menuBamboo);
 		window.draw(menuTitle);
+		
+		if (not onPractice) selectButton.setPosition(30,300+selection*100);
 		window.draw(menuButton1);
 		window.draw(menuButton2);
 		window.draw(menuButton3);
 		window.draw(selectButton);
+		
+		if (onPractice) enemyPractice.setTextureRect(sf::IntRect(397*selectPractice,0,397,256));
+		window.draw(enemyPractice);
+		window.draw(practiceButton1);
+		window.draw(practiceButton2);
 		
 		sf::Event event;
 		while (window.pollEvent(event)){
@@ -78,14 +100,8 @@ void menu(){
 						else if (selection==1){
 							onPractice = true;
 							selectPractice = 0;
+							enemyPractice.setTextureRect(sf::IntRect(397*selectPractice,0,397,256));
 							for (int i=0; i<36;i++){
-								menuBamboo.setTextureRect(sf::IntRect(0,705-i*20,790,690));
-								menuButton1.setPosition(75,300+20*i);
-								menuButton2.setPosition(75,400+20*i);
-								menuButton3.setPosition(75,500+20*i);
-								selectButton.setPosition(30,(300+selection*100)+20*i);
-								//Baixar botons
-								//Ensenyar captures de pantalla de escenaris
 								window.clear();
 								window.draw(menuBG);
 								window.draw(menuBamboo);
@@ -94,8 +110,19 @@ void menu(){
 								window.draw(menuButton2);
 								window.draw(menuButton3);
 								window.draw(selectButton);
-								//window.draw(captures);
+								window.draw(enemyPractice);
+								window.draw(practiceButton1);
+								window.draw(practiceButton2);
 								window.display();
+								
+								menuBamboo.setTextureRect(sf::IntRect(0,705-i*20,790,690));
+								menuButton1.setPosition(75,300+20*i);
+								menuButton2.setPosition(75,400+20*i);
+								menuButton3.setPosition(75,500+20*i);
+								selectButton.setPosition(30,(300+selection*100)+20*i);
+								enemyPractice.setPosition(400,350-700+20*i);
+								practiceButton1.setPosition(150,350-700+20*i);
+								practiceButton2.setPosition(650,350-700+20*i);
 							}
 							//Move buttons
 						}
@@ -109,11 +136,9 @@ void menu(){
 					
 					if (event.key.code == sf::Keyboard::Down or event.key.code == sf::Keyboard::Right){
 						selection = (selection+1)%3;
-						selectButton.setPosition(30,300+selection*100);
 					}
 					else if (event.key.code == sf::Keyboard::Up or event.key.code == sf::Keyboard::Left){
 						selection = (selection+2)%3;
-						selectButton.setPosition(30,300+selection*100);
 					}
 				}
 				else { //On practice menu
@@ -124,13 +149,6 @@ void menu(){
 					else if (event.key.code == sf::Keyboard::Escape){
 						onPractice = false;
 						for (int i=0; i<36;i++){
-							menuBamboo.setTextureRect(sf::IntRect(0,5+i*20,790,690));
-							menuButton1.setPosition(75,300+700-20*i);
-							menuButton2.setPosition(75,400+700-20*i);
-							menuButton3.setPosition(75,500+700-20*i);
-							selectButton.setPosition(30,(300+selection*100)+700-20*i);
-							//Baixar botons
-							//Ensenyar captures de pantalla de escenaris
 							window.clear();
 							window.draw(menuBG);
 							window.draw(menuBamboo);
@@ -139,8 +157,19 @@ void menu(){
 							window.draw(menuButton2);
 							window.draw(menuButton3);
 							window.draw(selectButton);
-							//window.draw(captures);
+							window.draw(enemyPractice);
+							window.draw(practiceButton1);
+							window.draw(practiceButton2);
 							window.display();
+							
+							menuBamboo.setTextureRect(sf::IntRect(0,5+i*20,790,690));
+							menuButton1.setPosition(75,300+700-20*i);
+							menuButton2.setPosition(75,400+700-20*i);
+							menuButton3.setPosition(75,500+700-20*i);
+							selectButton.setPosition(30,(300+selection*100)+700-20*i);
+							enemyPractice.setPosition(400,350-20*i);
+							practiceButton1.setPosition(150,350-20*i);
+							practiceButton2.setPosition(650,350-20*i);
 						}
 					}
 					
@@ -148,8 +177,8 @@ void menu(){
 						selectPractice = (selectPractice+1)%5;
 					}
 					else if (event.key.code == sf::Keyboard::Up or event.key.code == sf::Keyboard::Left){
-						selectPractice = (selectPractice-1)%5;
-					} 
+						selectPractice = (selectPractice+4)%5;
+					}
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed){
