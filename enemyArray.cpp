@@ -9,7 +9,7 @@ EnemyArray::EnemyArray(){
     stdTime = 50;
     routineType = 0;
     
-    stagesCleared = 5;
+    stagesCleared = 0;
     
 }
 
