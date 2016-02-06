@@ -78,8 +78,12 @@ void menu(){
 						else if (selection==1){
 							onPractice = true;
 							selectPractice = 0;
-							for (int i=0; i<35;i++){
+							for (int i=0; i<36;i++){
 								menuBamboo.setTextureRect(sf::IntRect(0,705-i*20,790,690));
+								menuButton1.setPosition(75,300+20*i);
+								menuButton2.setPosition(75,400+20*i);
+								menuButton3.setPosition(75,500+20*i);
+								selectButton.setPosition(30,(300+selection*100)+20*i);
 								//Baixar botons
 								//Ensenyar captures de pantalla de escenaris
 								window.clear();
@@ -108,7 +112,7 @@ void menu(){
 						selectButton.setPosition(30,300+selection*100);
 					}
 					else if (event.key.code == sf::Keyboard::Up or event.key.code == sf::Keyboard::Left){
-						selection = (selection-1)%3;
+						selection = (selection+2)%3;
 						selectButton.setPosition(30,300+selection*100);
 					}
 				}
@@ -119,8 +123,12 @@ void menu(){
 					}
 					else if (event.key.code == sf::Keyboard::Escape){
 						onPractice = false;
-						for (int i=0; i<35;i++){
+						for (int i=0; i<36;i++){
 							menuBamboo.setTextureRect(sf::IntRect(0,5+i*20,790,690));
+							menuButton1.setPosition(75,300+700-20*i);
+							menuButton2.setPosition(75,400+700-20*i);
+							menuButton3.setPosition(75,500+700-20*i);
+							selectButton.setPosition(30,(300+selection*100)+700-20*i);
 							//Baixar botons
 							//Ensenyar captures de pantalla de escenaris
 							window.clear();

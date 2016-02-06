@@ -245,6 +245,6 @@ bool EnemyArray::isMirror(int i){
 
 bool EnemyArray::finishPractice(){
     
-    return (enemies.size() == 0 and routineEnded());
+    return (enemies.size() == 0 and canStart());
     
 }
