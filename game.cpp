@@ -38,6 +38,14 @@ void Game::play(){
       focusPoint.setTextureRect(sf::IntRect(112,172,12,12));
       focusPoint.setOrigin(6,6);
     
+	sf::Font font;
+		if (!font.loadFromFile(Font_File)) print_error("Font");
+	sf::Text scoreText;
+		scoreText.setFont(font);
+		scoreText.setCharacterSize(30);
+		scoreText.setPosition(520,470);
+		scoreText.setColor(sf::Color(0,0,0));
+		scoreText.setStyle(sf::Text::Bold);
     
     BulletArray bullets;
     sf::Sprite bulletImg;
@@ -54,10 +62,12 @@ void Game::play(){
     bool alive = true;
     int bgpos = 0;
     bool canExit = false;
+	double score = 0;
     
     while (_myWindow->isOpen() and not canExit){
         
         bgpos++;
+		//score++;
         _myWindow->clear();
 	
         //Draw backgrounds
@@ -82,7 +92,7 @@ void Game::play(){
         }
         
         bullets.updateArray(character.pos);
-        enemies.updateArray(bullets,alive);
+        enemies.updateArray(bullets,alive,score);
         
         if (alive) {
             character.move(player);
@@ -142,6 +152,12 @@ void Game::play(){
 	    }
 	}
 		_myWindow->draw(Gbackground);
+		
+		
+		std::ostringstream os;
+		os << "Score:\n     " << score << "\nWaves cleared:\n    " << enemies.getStages();
+		scoreText.setString(os.str());
+		_myWindow->draw(scoreText);
         _myWindow->display();
     }
 }
@@ -226,7 +242,7 @@ void Game::practice(int stage){
         }
         
         
-
+		
         bullets.updateArray(character.pos);
         enemies.updatePractice(bullets,alive);
         

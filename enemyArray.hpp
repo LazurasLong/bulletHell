@@ -12,7 +12,7 @@ class EnemyArray
 public:
     
     EnemyArray();
-    void updateArray(BulletArray &bullets,bool);
+    void updateArray(BulletArray &bullets,bool,double&);
     void addEnemy(float,float,int);
     int amountEnemies();
     bool collides(sf::Vector2f);
@@ -25,6 +25,8 @@ public:
     void startPractice(int);
     void updatePractice(BulletArray &bullets,bool);
     bool finishPractice();
+	
+	int getStages();
     
 private:
     

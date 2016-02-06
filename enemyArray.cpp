@@ -13,7 +13,7 @@ EnemyArray::EnemyArray(){
     
 }
 
-void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
+void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive, double &score){
     
     if (enemies.size()>0){ //Check for collisions
         for (std::list<Enemy>::iterator it = enemies.begin(); it != enemies.end(); it++){
@@ -27,6 +27,7 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
                     }
                 }
                 else if ((*it).canDelete()){
+					score+=10;
                     enemies.erase(it);
                     it--;
                 }
@@ -40,6 +41,7 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive){
         if (canStart()){
             if (stagesCleared<5){
                 if (routineEnded()) {
+					if (stagesCleared!=0) score += 20;
                     stagesCleared++;
                     startRoutine(stagesCleared);
                 }
@@ -86,11 +88,12 @@ void EnemyArray::updatePractice(BulletArray &bullets, bool playerAlive){
                     enemies.erase(it);
                     it--;
                 }
-            } else {
+            }
+            else {
                 enemies.erase(it);
                 it--;
-	    }
-	}
+			}
+		}
     }
     updateRoutine();
 }
@@ -231,6 +234,13 @@ sf::Vector2f EnemyArray::getSpritePos(int i){
     return (*it).getSprite();
     
     
+}
+
+int EnemyArray::getStages(){
+	
+	if (stagesCleared < 1) return 0;
+	else return stagesCleared-1	;
+	
 }
 
 bool EnemyArray::isMirror(int i){

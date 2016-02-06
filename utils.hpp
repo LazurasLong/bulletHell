@@ -51,6 +51,8 @@ static const char* Practice_BG = "./images/GameBGPractice.png";
 
 static const char* Sprite_File = "./images/Sprites.png";
 
+static const char* Font_File = "./images/ChaparralPro.ttf";
+
 
 //static const char* file_titleHTP = "./resources/images/howToPlay/howToPlayTitle.png";
 //static const char* file_bgHTP = "./resources/images/howToPlay/bg.png";
