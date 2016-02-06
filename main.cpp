@@ -15,6 +15,8 @@ void menu(){
 		if (!bambooTex.loadFromFile(Menu_Bamboo)) print_error("Bamboo");
     sf::Texture titleTex;
 		if (!titleTex.loadFromFile(Menu_Title)) print_error("Title");
+	sf::Texture spriTex;
+		if (!spriTex.loadFromFile(Menu_Sprites)) print_error ("MenuSprites");
 	
 	
     sf::RectangleShape menuBG(sf::Vector2f(W_WIDTH,W_HEIGHT));
@@ -26,6 +28,24 @@ void menu(){
 	sf::Sprite menuTitle;
 		menuTitle.setTexture(titleTex);
 		menuTitle.setPosition(25,25);
+		
+	sf::Sprite menuButton1;
+		menuButton1.setTexture(spriTex);
+		menuButton1.setTextureRect(sf::IntRect(0,256,397,75));
+		menuButton1.setPosition(75,300);
+	sf::Sprite menuButton2;
+		menuButton2.setTexture(spriTex);
+		menuButton2.setTextureRect(sf::IntRect(397,256,397,75));
+		menuButton2.setPosition(75,400);
+	sf::Sprite menuButton3;
+		menuButton3.setTexture(spriTex);
+		menuButton3.setTextureRect(sf::IntRect(794,256,397,75));
+		menuButton3.setPosition(75,500);
+	sf::Sprite selectButton;
+		selectButton.setTexture(spriTex);
+		selectButton.setTextureRect(sf::IntRect(1290,256,30,75));
+		selectButton.setPosition(30,300);
+		
     
     int selection = 0;
     int selectPractice = 0;
@@ -40,6 +60,10 @@ void menu(){
 		window.draw(menuBG);
 		window.draw(menuBamboo);
 		window.draw(menuTitle);
+		window.draw(menuButton1);
+		window.draw(menuButton2);
+		window.draw(menuButton3);
+		window.draw(selectButton);
 		
 		sf::Event event;
 		while (window.pollEvent(event)){
@@ -47,38 +71,45 @@ void menu(){
 			else if (event.type == sf::Event::KeyPressed){
 				if (not onPractice){ //On main menu
 					if (event.key.code == sf::Keyboard::Return){
-					if (selection==0){
-						Game game(&window);
-						game.play();
-					}
-					else if (selection==1){
-						onPractice = true;
-						selectPractice = 0;
-						for (int i=0; i<35;i++){
-							menuBamboo.setTextureRect(sf::IntRect(0,705-i*20,790,690));
-							//Baixar botons
-							//Ensenyar captures de pantalla de escenaris
-							window.clear();
-							window.draw(menuBG);
-							window.draw(menuBamboo);
-							window.draw(menuTitle);
-							//window.draw(buttons);
-							//window.draw(captures);
-							window.display();
+						if (selection==0){
+							Game game(&window);
+							game.play();
 						}
-						//Move buttons
+						else if (selection==1){
+							onPractice = true;
+							selectPractice = 0;
+							for (int i=0; i<35;i++){
+								menuBamboo.setTextureRect(sf::IntRect(0,705-i*20,790,690));
+								//Baixar botons
+								//Ensenyar captures de pantalla de escenaris
+								window.clear();
+								window.draw(menuBG);
+								window.draw(menuBamboo);
+								window.draw(menuTitle);
+								window.draw(menuButton1);
+								window.draw(menuButton2);
+								window.draw(menuButton3);
+								window.draw(selectButton);
+								//window.draw(captures);
+								window.display();
+							}
+							//Move buttons
+						}
+						else if (selection==2){
+							window.close();
+						}
 					}
-					else if (selection==2){
+					else if (event.key.code == sf::Keyboard::Escape){
 						window.close();
 					}
-					} else if (event.key.code == sf::Keyboard::Escape){
-						window.close();
-					}
+					
 					if (event.key.code == sf::Keyboard::Down or event.key.code == sf::Keyboard::Right){
 						selection = (selection+1)%3;
+						selectButton.setPosition(30,300+selection*100);
 					}
 					else if (event.key.code == sf::Keyboard::Up or event.key.code == sf::Keyboard::Left){
 						selection = (selection-1)%3;
+						selectButton.setPosition(30,300+selection*100);
 					}
 				}
 				else { //On practice menu
@@ -96,11 +127,15 @@ void menu(){
 							window.draw(menuBG);
 							window.draw(menuBamboo);
 							window.draw(menuTitle);
-							//window.draw(buttons);
+							window.draw(menuButton1);
+							window.draw(menuButton2);
+							window.draw(menuButton3);
+							window.draw(selectButton);
 							//window.draw(captures);
 							window.display();
 						}
 					}
+					
 					if (event.key.code == sf::Keyboard::Down or event.key.code == sf::Keyboard::Right){
 						selectPractice = (selectPractice+1)%5;
 					}
@@ -109,8 +144,7 @@ void menu(){
 					} 
 				}
 			}
-			else if (event.type == sf::Event::MouseButtonPressed)
-            {
+			else if (event.type == sf::Event::MouseButtonPressed){
                 if (event.mouseButton.button == sf::Mouse::Left) grabbedOffset = window.getPosition() - sf::Mouse::getPosition();
             }
 			

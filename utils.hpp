@@ -41,6 +41,7 @@ using namespace std;
 static const char* Menu_File = "./images/MenuBG.png";
 static const char* Menu_Bamboo = "./images/Bamboo.png";
 static const char* Menu_Title = "./images/MenuTitle.png";
+static const char* Menu_Sprites = "./images/MenuSprites.png";
 
 static const char* BG_File1 = "./images/BGTexture.png";
 static const char* BG_File2 = "./images/BGTexture2.png";
