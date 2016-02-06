@@ -81,7 +81,7 @@ void Game::play(){
     bool canExit = false;
 	bool exited = false;
 	double score = 0;
-	int fadeAmount = 0;
+	int fadeAmount = 1;
     
     while (_myWindow->isOpen() and not canExit){
         
@@ -175,7 +175,7 @@ void Game::play(){
 			//	fadeAmount--;
 			//}
 			//else {
-				if (fadeAmount>0){
+				if (fadeAmount>1){
 					Fade2.setFillColor(sf::Color(0,0,0,255-fadeAmount));
 					_myWindow->draw(Fade2);
 					fadeAmount-=2;
@@ -198,7 +198,7 @@ void Game::play(){
 		
 		
 		if (alive and fadeAmount<255){
-			fadeAmount++;
+			fadeAmount+=2;
 			Fade.setFillColor(sf::Color(0,0,0,255-fadeAmount));
 			_myWindow->draw(Fade);
 		}
@@ -344,7 +344,6 @@ void Game::practice(int stage){
             }
         } else {
 	    if (enemies.amountEnemies()==0){
-			print_error("Game over!");
 			canExit = true;
 	    }
 	}

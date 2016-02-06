@@ -5,7 +5,7 @@
 
 EnemyArray::EnemyArray(){
     
-    routineTime = 250;
+    routineTime = 150;
     stdTime = 50;
     routineType = 0;
     
@@ -65,8 +65,7 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive, double &sco
 void EnemyArray::startPractice(int stage){
     
     if (enemies.size()==0){
-	print_error("startPractice ok");
-	startRoutine(stage);
+		startRoutine(stage);
     }
     
 }
@@ -145,7 +144,7 @@ void EnemyArray::startRoutine(int type){
     else if (type==4) routineTime = stdTime*13;
     else if (type==5) routineTime = stdTime*5;
 
-    std::cout << "routine started " << routineType << " " << routineTime << std::endl;
+    //std::cout << "routine started " << routineType << " " << routineTime << std::endl;
     
 }
 
