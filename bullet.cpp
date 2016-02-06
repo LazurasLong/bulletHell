@@ -31,7 +31,7 @@ void Bullet::updateBullet(){
             pos.x += vel.x;
             pos.y += vel.y;
             if (bounce){
-                if(pos.x>=W_WIDTH){
+                if(pos.x>=G_WIDTH){
                     vel.x = -vel.x;
                     pos.x += vel.x;
                     bounce = false;
@@ -57,8 +57,8 @@ void Bullet::updateBullet(){
         int axisX = (time+5)*20/9, axisY = 500*sin(0.0174533*(time+5));
         
         if (vel.x == 2) { //Mirrored enemy, spaghetti code
-            axisX = W_WIDTH-axisX;
-            axisY = W_HEIGHT-axisY;
+            axisX = G_WIDTH-axisX;
+            axisY = G_HEIGHT-axisY;
         }
         
         
@@ -79,7 +79,7 @@ void Bullet::updateBullet(){
 }
 
 bool Bullet::in_bounds(){
-    return(pos.x >= -10 and pos.x <= W_WIDTH+10 and pos.y >= -10 and pos.y <= W_HEIGHT+10);
+    return(pos.x >= -10 and pos.x <= G_WIDTH+10 and pos.y >= -10 and pos.y <= G_HEIGHT+10);
 }
 
 bool Bullet::isFriendly(){

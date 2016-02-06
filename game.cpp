@@ -10,18 +10,24 @@ void Game::play(){
       if (!bgTexture.loadFromFile(BG_File1)) print_error("BG1");
     sf::Texture bgTexture2;    
       if (!bgTexture2.loadFromFile(BG_File2)) print_error("BG2");
+	sf::Texture gameBG;
+	  if (!gameBG.loadFromFile(Play_BG)) print_error("Game BG");
     sf::Texture spriteTextures;
       if (!spriteTextures.loadFromFile(Sprite_File)) print_error("Sprites");
 
       
-    sf::RectangleShape background(sf::Vector2f(W_WIDTH,W_HEIGHT));
+    sf::RectangleShape background(sf::Vector2f(G_WIDTH,G_HEIGHT));
       background.setTexture(&bgTexture);
-      background.setFillColor(sf::Color(50,250,250));    
+      background.setFillColor(sf::Color(50,250,250));
+	  background.setPosition(G_ORIGIN,G_ORIGIN);
     
-    sf::RectangleShape background2(sf::Vector2f(W_WIDTH,W_HEIGHT));
+    sf::RectangleShape background2(sf::Vector2f(G_WIDTH,G_HEIGHT));
       background2.setTexture(&bgTexture2);
       background2.setFillColor(sf::Color(255, 255, 255,128));
-    
+	  background2.setPosition(G_ORIGIN,G_ORIGIN);
+	 
+	sf::RectangleShape Gbackground(sf::Vector2f(W_WIDTH,W_HEIGHT));
+	  Gbackground.setTexture(&gameBG);
     
     sf::Sprite player;
       player.setTexture(spriteTextures);
@@ -56,12 +62,12 @@ void Game::play(){
 	
         //Draw backgrounds
         _myWindow->draw(background);
-        if (bgpos>=W_HEIGHT) bgpos -= W_HEIGHT;
-	//Bottom bg2 copy
-        background2.setPosition(0,bgpos-W_HEIGHT);
+        if (bgpos>=G_HEIGHT) bgpos -= G_HEIGHT;
+		//Bottom bg2 copy
+        background2.setPosition(G_ORIGIN,G_ORIGIN+bgpos-G_HEIGHT);
         _myWindow->draw(background2);
-	//Top bg2 copy
-        background2.setPosition(0,bgpos);
+		//Top bg2 copy
+        background2.setPosition(G_ORIGIN,G_ORIGIN+bgpos);
         _myWindow->draw(background2);
 	
 	
@@ -86,21 +92,24 @@ void Game::play(){
 		//play death sound
             }
             
-            player.setPosition(character.pos.x, character.pos.y);
-	    _myWindow->draw(player);
+            player.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
+			_myWindow->draw(player);
             
 
         }
 
         for (int i = 0;i<enemies.amountEnemies();i++){  //Draw enemies
             sf::Vector2f spr=enemies.getSpritePos(i);
-            baddie.setTextureRect(sf::IntRect(spr.x,spr.y,32,32));
-            baddie.setOrigin(16,16);
+				baddie.setTextureRect(sf::IntRect(spr.x,spr.y,32,32));
+				baddie.setOrigin(16,16);
             
             if (enemies.isMirror(i)) baddie.setScale(-1.f,1.f);
             else baddie.setScale(1.f,1.f);
-
-            baddie.setPosition(enemies.getEnemyPos(i));
+			
+			sf::Vector2f baddie_Position;
+				baddie_Position = enemies.getEnemyPos(i);
+				baddie.setPosition(G_ORIGIN+baddie_Position.x,G_ORIGIN+baddie_Position.y);
+			
             _myWindow->draw(baddie);
         }
         
@@ -115,24 +124,24 @@ void Game::play(){
                 bulletImg.setOrigin(6,6);
             }
             sf::Vector2f bullet_Position;
-		bullet_Position = bullets.getBulletPos(i);
-		bulletImg.setPosition(bullet_Position);
+				bullet_Position = bullets.getBulletPos(i);
+				bulletImg.setPosition(G_ORIGIN+bullet_Position.x,G_ORIGIN+bullet_Position.y);
 
-		_myWindow->draw(bulletImg);
+			_myWindow->draw(bulletImg);
         }
         
         if (alive) { //Focus point
             if (character.isFocused()) {
-                focusPoint.setPosition(character.pos.x,character.pos.y);
+                focusPoint.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
                 _myWindow->draw(focusPoint);
             }
         } else {
 	    if (enemies.amountEnemies()==0){
-		print_error("Game over!");
-		canExit = true;
+			print_error("Game over!");
+			canExit = true;
 	    }
 	}
-
+		_myWindow->draw(Gbackground);
         _myWindow->display();
     }
 }
@@ -143,19 +152,25 @@ void Game::practice(int stage){
       if (!bgTexture.loadFromFile(BG_File1)) print_error("BG1");
     sf::Texture bgTexture2;    
       if (!bgTexture2.loadFromFile(BG_File2)) print_error("BG2");
+	sf::Texture gameBG;
+	  if (!gameBG.loadFromFile(Practice_BG)) print_error("Game BG");
     sf::Texture spriteTextures;
       if (!spriteTextures.loadFromFile(Sprite_File)) print_error("Sprites");
 
       
-    sf::RectangleShape background(sf::Vector2f(W_WIDTH,W_HEIGHT));
+    sf::RectangleShape background(sf::Vector2f(G_WIDTH,G_HEIGHT));
       background.setTexture(&bgTexture);
-      background.setFillColor(sf::Color(50,50,250));    
+      background.setFillColor(sf::Color(50,50,250));
+	  background.setPosition(G_ORIGIN,G_ORIGIN);
     
-    sf::RectangleShape background2(sf::Vector2f(W_WIDTH,W_HEIGHT));
+    sf::RectangleShape background2(sf::Vector2f(G_WIDTH,G_HEIGHT));
       background2.setTexture(&bgTexture2);
       background2.setFillColor(sf::Color(255, 255, 255,128));
+	  background2.setPosition(G_ORIGIN,G_ORIGIN);
     
-    
+	sf::RectangleShape Gbackground(sf::Vector2f(W_WIDTH,W_HEIGHT));
+	  Gbackground.setTexture(&gameBG);
+	  
     sf::Sprite player;
       player.setTexture(spriteTextures);
       Character character(player);
@@ -191,12 +206,12 @@ void Game::practice(int stage){
 	
         //Draw backgrounds
         _myWindow->draw(background);
-        if (bgpos>=W_HEIGHT) bgpos -= W_HEIGHT;
-	//Bottom bg2 copy
-        background2.setPosition(0,bgpos-W_HEIGHT);
+        if (bgpos>=G_HEIGHT) bgpos -= G_HEIGHT;
+		//Bottom bg2 copy
+        background2.setPosition(G_ORIGIN,G_ORIGIN+bgpos-G_HEIGHT);
         _myWindow->draw(background2);
-	//Top bg2 copy
-        background2.setPosition(0,bgpos);
+		//Top bg2 copy
+        background2.setPosition(G_ORIGIN,G_ORIGIN+bgpos);
         _myWindow->draw(background2);
 	
 	
@@ -223,7 +238,7 @@ void Game::practice(int stage){
 		//play death sound
             }
             
-            player.setPosition(character.pos.x, character.pos.y);
+            player.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
 	    _myWindow->draw(player);
             
 
@@ -231,13 +246,16 @@ void Game::practice(int stage){
 
         for (int i = 0;i<enemies.amountEnemies();i++){  //Draw enemies
             sf::Vector2f spr=enemies.getSpritePos(i);
-            baddie.setTextureRect(sf::IntRect(spr.x,spr.y,32,32));
-            baddie.setOrigin(16,16);
+				baddie.setTextureRect(sf::IntRect(spr.x,spr.y,32,32));
+				baddie.setOrigin(16,16);
             
             if (enemies.isMirror(i)) baddie.setScale(-1.f,1.f);
             else baddie.setScale(1.f,1.f);
 
-            baddie.setPosition(enemies.getEnemyPos(i));
+			sf::Vector2f baddie_Position;
+				baddie_Position = enemies.getEnemyPos(i);
+				baddie.setPosition(G_ORIGIN+baddie_Position.x,G_ORIGIN+baddie_Position.y);
+				
             _myWindow->draw(baddie);
         }
         
@@ -252,28 +270,28 @@ void Game::practice(int stage){
                 bulletImg.setOrigin(6,6);
             }
             sf::Vector2f bullet_Position;
-		bullet_Position = bullets.getBulletPos(i);
-		bulletImg.setPosition(bullet_Position);
+				bullet_Position = bullets.getBulletPos(i);
+				bulletImg.setPosition(G_ORIGIN+bullet_Position.x,G_ORIGIN+bullet_Position.y);
 
-		_myWindow->draw(bulletImg);
+			_myWindow->draw(bulletImg);
         }
         
         if (alive) { //Focus point
             if (character.isFocused()) {
-                focusPoint.setPosition(character.pos.x,character.pos.y);
+                focusPoint.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
                 _myWindow->draw(focusPoint);
             }
         } else {
 	    if (enemies.amountEnemies()==0){
-		print_error("Game over!");
-		canExit = true;
+			print_error("Game over!");
+			canExit = true;
 	    }
 	}
 	
 	if (enemies.finishPractice()){
 	    canExit = true;
 	}
-
+		_myWindow->draw(Gbackground);
         _myWindow->display();
     }    
 }

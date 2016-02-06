@@ -15,8 +15,8 @@ Character::Character(sf::Sprite &player){
     player.setTextureRect(sf::IntRect(sprx,spry,16,45));
     player.setOrigin(8,17);
     
-    pos.x = W_WIDTH/2;
-    pos.y = W_HEIGHT-100;
+    pos.x = G_WIDTH/2;
+    pos.y = G_HEIGHT-100;
     
     timeAlive=0;
     shootTimeout = 0;
@@ -38,7 +38,7 @@ void Character::move(sf::Sprite &player){
     
     //X
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-        if (pos.x <= W_WIDTH-travelpos-16) pos.x += travelpos;
+        if (pos.x <= G_WIDTH-travelpos-16) pos.x += travelpos;
         spry = 64;
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
         if (pos.x >= travelpos+16) pos.x -= travelpos;
@@ -56,7 +56,7 @@ void Character::move(sf::Sprite &player){
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
         if (pos.y >= travelpos+32) pos.y -= travelpos;
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-        if (pos.y <= W_HEIGHT-travelpos-32) pos.y += travelpos;
+        if (pos.y <= G_HEIGHT-travelpos-32) pos.y += travelpos;
     }
 
 }

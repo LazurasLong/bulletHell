@@ -59,7 +59,7 @@ void Enemy::move(){
     }
     else if (type==3){
         
-        pos.x = W_WIDTH/4+modified*W_WIDTH/4;
+        pos.x = G_WIDTH/4+modified*G_WIDTH/4;
         if (timeAlive<100) pos.y = timeAlive*2;
         else if (timeAlive>200) pos.y = (timeAlive-100)*2;
         
@@ -78,12 +78,12 @@ void Enemy::move(){
         
         pos.x = timeAlive*20/9;
         pos.y = 500*sin(0.0174533*timeAlive);
-        if (mirror) pos.y = 600-pos.y;
+        if (mirror) pos.y = G_HEIGHT-pos.y;
         
     }
         
     if (mirror){
-        pos.x = W_WIDTH-pos.x;
+        pos.x = G_WIDTH-pos.x;
     }
 }
 
@@ -233,13 +233,13 @@ bool Enemy::isMirror(){
 }
 
 bool Enemy::in_bounds(){
-    return(pos.x >= -16 and pos.x <= W_WIDTH+16 and pos.y >= -16 and pos.y <= W_HEIGHT+16);
+    return(pos.x >= -16 and pos.x <= G_WIDTH+16 and pos.y >= -16 and pos.y <= G_HEIGHT+16);
 }
 
 //-----------------------------------PRIVATES---------------------------------------
 
 bool Enemy::in_bounds_shoot(){
-    return(pos.x >= 0 and pos.x <= W_WIDTH and pos.y >= 0 and pos.y <= W_HEIGHT);
+    return(pos.x >= 0 and pos.x <= G_WIDTH and pos.y >= 0 and pos.y <= G_HEIGHT);
 }
 
 bool Enemy::canShoot(){

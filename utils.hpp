@@ -29,15 +29,25 @@
 #include "game.hpp"
 
 
-#define W_WIDTH 400
-#define W_HEIGHT 600
+#define W_WIDTH 800
+#define W_HEIGHT 700
+#define G_WIDTH 400
+#define G_HEIGHT 600
+#define G_ORIGIN 50
 
 #define APP_NAME "My game"
 using namespace std;
 
-static const char* Menu_File = "./images/Menu.png";
+static const char* Menu_File = "./images/MenuBG.png";
+static const char* Menu_Bamboo = "./images/Bamboo.png";
+static const char* Menu_Title = "./images/MenuTitle.png";
+
 static const char* BG_File1 = "./images/BGTexture.png";
 static const char* BG_File2 = "./images/BGTexture2.png";
+
+static const char* Play_BG = "./images/GameBG.png";
+static const char* Practice_BG = "./images/GameBGPractice.png";
+
 static const char* Sprite_File = "./images/Sprites.png";
 
 
