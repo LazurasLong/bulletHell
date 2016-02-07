@@ -36,6 +36,10 @@
 #define G_ORIGIN 50
 
 #define APP_NAME "My game"
+
+#define M_VOLUME 20
+#define S_VOLUME 20
+
 using namespace std;
 
 static const char* Menu_File = "./resources/images/MenuBG.png";
@@ -50,6 +54,16 @@ static const char* Practice_BG = "./resources/images/GameBGPractice.png";
 static const char* Sprite_File = "./resources/images/Sprites.png";
 
 static const char* Font_File = "./resources/ChaparralPro.ttf";
+
+
+
+static const char* Menu_Music = "./resources/music/menu.ogg";
+static const char* Game_Music = "./resources/music/game.ogg";
+static const char* Select_Sound = "./resources/music/select.ogg";
+static const char* Death_Sound = "./resources/music/death.ogg";
+static const char* Shoot_Sound = "./resources/music/shoot.ogg";
+static const char* Hit_Sound = "./resources/music/hit.ogg";
+static const char* Kill_Sound = "./resources/music/kill.ogg";
 
 
 static int maxim(int a, int b) {

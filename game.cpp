@@ -71,6 +71,12 @@ void Game::play(){
     sf::Sprite baddie;
       baddie.setTexture(spriteTextures);
       
+	sf::SoundBuffer bufDeath;
+		if (!bufDeath.loadFromFile(Death_Sound)) print_error("Death sound");
+    sf::Sound deathSound;
+		deathSound.setBuffer(bufDeath);
+		deathSound.setVolume(S_VOLUME);
+	
     //z = atan(y/x)
     //Vx = V*cos(z) = V * sqr(x²/x²+y²)
     //Vy = V*sin(z)
@@ -122,7 +128,8 @@ void Game::play(){
             character.update(player,bullets);
             if (bullets.collides(character.pos,true) or enemies.collides(character.pos)){
                 alive = false;
-		//play death sound
+				deathSound.play();
+				//play death sound
             }
             
             player.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);

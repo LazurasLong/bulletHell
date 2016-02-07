@@ -64,6 +64,20 @@ void menu(){
 		practiceButton2.setPosition(650,350-700);
 		practiceButton2.setOrigin(25,37);
     
+	sf::SoundBuffer bufMenu;
+		if (!bufMenu.loadFromFile(Menu_Music)) print_error("Death sound");
+	sf::SoundBuffer bufSelect;
+		if (!bufSelect.loadFromFile(Select_Sound)) print_error("Select sound");
+    sf::Sound menuMusic;
+		menuMusic.setBuffer(bufMenu);
+		menuMusic.setVolume(M_VOLUME);
+		menuMusic.setLoop(true);
+		menuMusic.play();
+	sf::Sound selectSound;
+		selectSound.setBuffer(bufSelect);
+		selectSound.setVolume(S_VOLUME);
+	
+		
     int selection = 0;
     int selectPractice = 0;
     bool onPractice = false;
@@ -98,12 +112,15 @@ void menu(){
 				if (not onPractice){ //On main menu
 					if (event.key.code == sf::Keyboard::Return){
 						if (selection==0){
+							menuMusic.stop();
 							Game game(&window);
 							game.play();
+							menuMusic.play();
 						}
 						else if (selection==1){
 							onPractice = true;
 							selectPractice = 0;
+							selectSound.setPitch(10);
 							enemyPractice.setTextureRect(sf::IntRect(397*selectPractice,0,397,256));
 							for (int i=0; i<36;i++){
 								window.clear();
@@ -127,6 +144,10 @@ void menu(){
 								enemyPractice.setPosition(400,350-700+20*i);
 								practiceButton1.setPosition(150,350-700+20*i);
 								practiceButton2.setPosition(650,350-700+20*i);
+								
+								menuMusic.setVolume(M_VOLUME-i/2);
+								
+								
 							}
 							//Move buttons
 						}
@@ -139,19 +160,24 @@ void menu(){
 					}
 					
 					if (event.key.code == sf::Keyboard::Down or event.key.code == sf::Keyboard::Right){
+						selectSound.play();
 						selection = (selection+1)%3;
 					}
 					else if (event.key.code == sf::Keyboard::Up or event.key.code == sf::Keyboard::Left){
+						selectSound.play();
 						selection = (selection+2)%3;
 					}
 				}
 				else { //On practice menu
 					if (event.key.code == sf::Keyboard::Return){
+						menuMusic.stop();
 						Game game(&window);
 						game.practice(selectPractice+1);
+						menuMusic.play();
 					}
 					else if (event.key.code == sf::Keyboard::Escape){
 						onPractice = false;
+						selectSound.setPitch(1);
 						for (int i=0; i<36;i++){
 							window.clear();
 							window.draw(menuBG);
@@ -174,13 +200,19 @@ void menu(){
 							enemyPractice.setPosition(400,350-20*i);
 							practiceButton1.setPosition(150,350-20*i);
 							practiceButton2.setPosition(650,350-20*i);
+							
+							
+							menuMusic.setVolume(M_VOLUME-36/2+i/2);
+							
 						}
 					}
 					
 					if (event.key.code == sf::Keyboard::Down or event.key.code == sf::Keyboard::Right){
+						selectSound.play();
 						selectPractice = (selectPractice+1)%5;
 					}
 					else if (event.key.code == sf::Keyboard::Up or event.key.code == sf::Keyboard::Left){
+						selectSound.play();
 						selectPractice = (selectPractice+4)%5;
 					}
 				}
