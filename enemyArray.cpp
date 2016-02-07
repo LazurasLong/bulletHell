@@ -1,6 +1,3 @@
-//#include <SFML/Graphics.hpp>
-//#include "enemy.hpp"
-//#include "enemyArray.hpp"
 #include "utils.hpp"
 
 EnemyArray::EnemyArray(){

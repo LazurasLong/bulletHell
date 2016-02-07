@@ -1,9 +1,3 @@
-//#include <iostream>
-//#include <SFML/Graphics.hpp>
-//#include "character.hpp"
-//#include "bulletArray.hpp"
-//#include "enemyArray.hpp"
-
 #include "utils.hpp"
 
 void menu(){

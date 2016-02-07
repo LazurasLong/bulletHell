@@ -1,9 +1,6 @@
 #ifndef _BARRAY_HPP_
 #define _BARRAY_HPP_
 
-//#include <iostream>
-//#include <list>
-//#include "bullet.hpp"
 #include "utils.hpp"
 
 class BulletArray

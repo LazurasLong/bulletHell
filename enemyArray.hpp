@@ -1,10 +1,6 @@
 #ifndef _EARRAY_HPP_
 #define _EARRAY_HPP_
 
-//#include <iostream>
-//#include <list>
-//#include "enemy.hpp"
-
 #include "utils.hpp"
 
 class EnemyArray

@@ -1,7 +1,3 @@
-//#include "bulletArray.hpp"
-//#include "bullet.hpp"
-//#include <cmath>
-//#include <stdio.h>
 #include "utils.hpp"
 
 BulletArray::BulletArray(){

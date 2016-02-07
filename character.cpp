@@ -1,9 +1,3 @@
-//#include <SFML/Graphics.hpp>
-//#include "character.hpp"
-//#include "bullet.hpp"
-//#include <iostream>
-//#include <list>
-
 #include "utils.hpp"
 
 

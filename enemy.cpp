@@ -1,8 +1,3 @@
-//#include <SFML/Graphics.hpp>
-//#include <cmath>
-//#include "enemy.hpp"
-//#include "bullet.hpp"
-//#include "bulletArray.hpp"
 #include "utils.hpp"
 
 Enemy::Enemy(int t, bool m, int mod){

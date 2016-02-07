@@ -1,7 +1,3 @@
-//#include "bullet.hpp"
-//#include <SFML/Graphics.hpp>
-//#include <iostream>
-//#include <cmath>
 #include "utils.hpp"
 
 Bullet::Bullet(float x, float y, float xvel, float yvel, bool playerShot, int bullet_type, int mod){
