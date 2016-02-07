@@ -71,8 +71,16 @@ void Game::play(){
     sf::Sprite baddie;
       baddie.setTexture(spriteTextures);
       
+	sf::SoundBuffer bufGame;
+		if (!bufGame.loadFromFile(Game_Music)) print_error("Game music");
 	sf::SoundBuffer bufDeath;
 		if (!bufDeath.loadFromFile(Death_Sound)) print_error("Death sound");
+	
+	sf::Sound gameMusic;
+		gameMusic.setBuffer(bufGame);
+		gameMusic.setLoop(true);
+		gameMusic.setVolume(M_VOLUME);
+		gameMusic.play();
     sf::Sound deathSound;
 		deathSound.setBuffer(bufDeath);
 		deathSound.setVolume(S_VOLUME);
@@ -185,8 +193,10 @@ void Game::play(){
 					Fade2.setFillColor(sf::Color(0,0,0,255-fadeAmount));
 					_myWindow->draw(Fade2);
 					fadeAmount-=2;
+					gameMusic.setVolume(minim(fadeAmount/10,M_VOLUME));
 				}
 				else {
+					gameMusic.stop();
 					if (not exited){
 						_myWindow->draw(Fade2);						
 						_myWindow->draw(exitText);
@@ -211,6 +221,7 @@ void Game::play(){
 
         _myWindow->display();
     }
+
 }
 
 void Game::practice(int stage){

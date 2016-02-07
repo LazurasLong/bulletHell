@@ -84,7 +84,7 @@ void menu(){
     
 	sf::Vector2i grabbedOffset;
     bool grabbedWindow = false;
-	
+	bool windowFocused = false;
 	
     while (window.isOpen()){
 		window.clear();
@@ -218,17 +218,23 @@ void menu(){
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed){
-                if (event.mouseButton.button == sf::Mouse::Left) grabbedOffset = window.getPosition() - sf::Mouse::getPosition();
+                if (event.mouseButton.button == sf::Mouse::Left and windowFocused) grabbedOffset = window.getPosition() - sf::Mouse::getPosition();
             }
-			
+			else if (event.type == sf::Event::LostFocus){
+				windowFocused = false;
+			}
+			else if (event.type == sf::Event::GainedFocus){
+				windowFocused = true;
+			}
 		}
-		grabbedWindow = sf::Mouse::isButtonPressed(sf::Mouse::Left);
-        if (grabbedWindow) window.setPosition(sf::Mouse::getPosition() + grabbedOffset);
-
+		if (windowFocused){
+			grabbedWindow = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+			if (grabbedWindow) window.setPosition(sf::Mouse::getPosition() + grabbedOffset);
+		}
         window.display();
 		
 		
-    }
+    }	
   
 }
 

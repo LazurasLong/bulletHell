@@ -69,6 +69,9 @@ static const char* Kill_Sound = "./resources/music/kill.ogg";
 static int maxim(int a, int b) {
     return (a>b)?a : b;
 }
+static int minim(int a, int b) {
+	return (a<b)?a : b;
+}
 
 static void print_error(string text) {
     std::cout << "Failed to load " << text << std::endl;
