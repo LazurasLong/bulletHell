@@ -76,7 +76,7 @@ void menu(){
 		window.clear();
 		window.draw(menuBG);
 		window.draw(menuBamboo);
-		window.draw(menuTitle);
+
 		
 		if (not onPractice) selectButton.setPosition(30,300+selection*100);
 		window.draw(menuButton1);
@@ -88,6 +88,8 @@ void menu(){
 		window.draw(enemyPractice);
 		window.draw(practiceButton1);
 		window.draw(practiceButton2);
+		
+		window.draw(menuTitle);
 		
 		sf::Event event;
 		while (window.pollEvent(event)){
@@ -107,7 +109,6 @@ void menu(){
 								window.clear();
 								window.draw(menuBG);
 								window.draw(menuBamboo);
-								window.draw(menuTitle);
 								window.draw(menuButton1);
 								window.draw(menuButton2);
 								window.draw(menuButton3);
@@ -115,6 +116,7 @@ void menu(){
 								window.draw(enemyPractice);
 								window.draw(practiceButton1);
 								window.draw(practiceButton2);
+								window.draw(menuTitle);
 								window.display();
 								
 								menuBamboo.setTextureRect(sf::IntRect(0,705-i*20,790,690));
@@ -154,7 +156,6 @@ void menu(){
 							window.clear();
 							window.draw(menuBG);
 							window.draw(menuBamboo);
-							window.draw(menuTitle);
 							window.draw(menuButton1);
 							window.draw(menuButton2);
 							window.draw(menuButton3);
@@ -162,6 +163,7 @@ void menu(){
 							window.draw(enemyPractice);
 							window.draw(practiceButton1);
 							window.draw(practiceButton2);
+							window.draw(menuTitle);
 							window.display();
 							
 							menuBamboo.setTextureRect(sf::IntRect(0,5+i*20,790,690));
