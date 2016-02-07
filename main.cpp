@@ -9,6 +9,8 @@
 void menu(){
   
     sf::RenderWindow window(sf::VideoMode(W_WIDTH, W_HEIGHT), APP_NAME, sf::Style::None);
+		window.setFramerateLimit(60);
+	
     sf::Texture menuTex;    
 		if (!menuTex.loadFromFile(Menu_File)) print_error("Menu");
     sf::Texture bambooTex;
