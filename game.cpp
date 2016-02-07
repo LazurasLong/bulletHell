@@ -119,8 +119,7 @@ void Game::play(){
         enemies.updateArray(bullets,alive,score);
         
         if (alive) {
-            character.move(player);
-            character.shoot(bullets);
+            character.update(player,bullets);
             if (bullets.collides(character.pos,true) or enemies.collides(character.pos)){
                 alive = false;
 		//play death sound
@@ -292,8 +291,7 @@ void Game::practice(int stage){
         enemies.updatePractice(bullets,alive);
         
         if (alive) {
-            character.move(player);
-            character.shoot(bullets);
+            character.update(player,bullets);
             if (bullets.collides(character.pos,true) or enemies.collides(character.pos)){
                 alive = false;
 		//play death sound

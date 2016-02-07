@@ -23,9 +23,15 @@ Character::Character(sf::Sprite &player){
     focused = false;
 }
 
+void Character::update(sf::Sprite& player, BulletArray &bullets){
+
+	timeAlive++;
+	move(player);
+	shoot(bullets);
+	
+}
+
 void Character::move(sf::Sprite &player){
-    
-    timeAlive++;
     
     float travelpos;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
