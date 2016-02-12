@@ -77,6 +77,13 @@ void Game::play(){
 		if (!bufGame2.loadFromFile(Game_Loop_Music)) print_error("Game loop music");
 	sf::SoundBuffer bufDeath;
 		if (!bufDeath.loadFromFile(Death_Sound)) print_error("Death sound");
+	sf::SoundBuffer bufShoot;
+		if (!bufShoot.loadFromFile(Shoot_Sound)) print_error("Shoot sound");
+	sf::SoundBuffer bufEneHit;
+		if (!bufEneHit.loadFromFile(Hit_Sound)) print_error("Hit sound");
+	sf::SoundBuffer bufEneDestroy;
+		if (!bufEneDestroy.loadFromFile(Kill_Sound)) print_error("Kill sound");
+	
 	
 	sf::Sound gameMusic;
 		gameMusic.setBuffer(bufGame1);
@@ -90,6 +97,15 @@ void Game::play(){
     sf::Sound deathSound;
 		deathSound.setBuffer(bufDeath);
 		deathSound.setVolume(S_VOLUME);
+	sf::Sound shootSound;
+		shootSound.setBuffer(bufShoot);
+		shootSound.setVolume(S_VOLUME/4);
+	sf::Sound hitSound;
+		hitSound.setBuffer(bufEneHit);
+		hitSound.setVolume(S_VOLUME);
+	sf::Sound killSound;
+		killSound.setBuffer(bufEneDestroy);
+		killSound.setVolume(S_VOLUME);
 	
     //z = atan(y/x)
     //Vx = V*cos(z) = V * sqr(x²/x²+y²)
@@ -135,10 +151,10 @@ void Game::play(){
         }
         
         bullets.updateArray(character.pos);
-        enemies.updateArray(bullets,alive,score);
-        
+		enemies.updateArray(bullets,alive,score,hitSound,killSound);
+		
         if (alive) {
-            character.update(player,bullets);
+            character.update(player,bullets,shootSound);
             if (bullets.collides(character.pos,true) or enemies.collides(character.pos)){
                 alive = false;
 				deathSound.play();
@@ -274,6 +290,31 @@ void Game::practice(int stage){
     sf::Sprite baddie;
       baddie.setTexture(spriteTextures);
       
+	  
+	  
+	sf::SoundBuffer bufDeath;
+		if (!bufDeath.loadFromFile(Death_Sound)) print_error("Death sound");
+	sf::SoundBuffer bufShoot;
+		if (!bufShoot.loadFromFile(Shoot_Sound)) print_error("Shoot sound");
+	sf::SoundBuffer bufEneHit;
+		if (!bufEneHit.loadFromFile(Hit_Sound)) print_error("Hit sound");
+	sf::SoundBuffer bufEneDestroy;
+		if (!bufEneDestroy.loadFromFile(Kill_Sound)) print_error("Kill sound");	  
+	  
+	sf::Sound deathSound;
+		deathSound.setBuffer(bufDeath);
+		deathSound.setVolume(S_VOLUME);
+	sf::Sound shootSound;
+		shootSound.setBuffer(bufShoot);
+		shootSound.setVolume(S_VOLUME/4);
+	sf::Sound hitSound;
+		hitSound.setBuffer(bufEneHit);
+		hitSound.setVolume(S_VOLUME);
+	sf::Sound killSound;
+		killSound.setBuffer(bufEneDestroy);
+		killSound.setVolume(S_VOLUME);  
+	  
+	
     //z = atan(y/x)
     //Vx = V*cos(z) = V * sqr(x²/x²+y²)
     //Vy = V*sin(z)
@@ -313,18 +354,17 @@ void Game::practice(int stage){
         
 		
         bullets.updateArray(character.pos);
-        enemies.updatePractice(bullets,alive);
+        enemies.updatePractice(bullets,alive,hitSound,killSound);
         
         if (alive) {
-            character.update(player,bullets);
+            character.update(player,bullets,shootSound);
             if (bullets.collides(character.pos,true) or enemies.collides(character.pos)){
                 alive = false;
-		//play death sound
+				deathSound.play();
             }
             
             player.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
-	    _myWindow->draw(player);
-            
+			_myWindow->draw(player);
 
         }
 
@@ -366,7 +406,7 @@ void Game::practice(int stage){
                 _myWindow->draw(focusPoint);
             }
         } else {
-	    if (enemies.amountEnemies()==0){
+			if (enemies.amountEnemies()==0){
 			canExit = true;
 	    }
 	}

@@ -17,11 +17,11 @@ Character::Character(sf::Sprite &player){
     focused = false;
 }
 
-void Character::update(sf::Sprite& player, BulletArray &bullets){
+void Character::update(sf::Sprite& player, BulletArray &bullets,sf::Sound &shootSound){
 
 	timeAlive++;
 	move(player);
-	shoot(bullets);
+	shoot(bullets,shootSound);
 	
 }
 
@@ -61,13 +61,14 @@ void Character::move(sf::Sprite &player){
 
 }
 
-void Character::shoot(BulletArray &bullets){
+void Character::shoot(BulletArray &bullets,sf::Sound &shootSound){
     
 
     if (shootTimeout == 0){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
             bullets.addBullet(true,pos.x,pos.y,9,0,0);
             shootTimeout = shootFreq;
+			shootSound.play();
         }
     } else {
         shootTimeout--;

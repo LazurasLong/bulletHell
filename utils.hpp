@@ -62,9 +62,9 @@ static const char* Game_Music = "./resources/music/game1.ogg";
 static const char* Game_Loop_Music = "./resources/music/game2.ogg";
 static const char* Select_Sound = "./resources/music/select.ogg";
 static const char* Death_Sound = "./resources/music/death.ogg";
-static const char* Shoot_Sound = "./resources/music/shoot.ogg";
+static const char* Shoot_Sound = "./resources/music/shoot.wav";
 static const char* Hit_Sound = "./resources/music/hit.ogg";
-static const char* Kill_Sound = "./resources/music/kill.ogg";
+static const char* Kill_Sound = "./resources/music/kill.wav";
 
 
 static int maxim(int a, int b) {

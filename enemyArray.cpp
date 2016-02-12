@@ -10,7 +10,7 @@ EnemyArray::EnemyArray(){
     
 }
 
-void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive, double &score){
+void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive, double &score, sf::Sound &hit, sf::Sound &kill){
     
     if (enemies.size()>0){ //Check for collisions
         for (std::list<Enemy>::iterator it = enemies.begin(); it != enemies.end(); it++){
@@ -19,7 +19,8 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive, double &sco
                 if (not (*it).isDead()){
                     if (bullets.collides((*it).pos,false)){
                         (*it).getsHit();
-                        //Play sound
+                        hit.play();
+						if ((*it).isDead()) kill.play();
                         it--;
                     }
                 }
@@ -67,7 +68,7 @@ void EnemyArray::startPractice(int stage){
     
 }
 
-void EnemyArray::updatePractice(BulletArray &bullets, bool playerAlive){
+void EnemyArray::updatePractice(BulletArray &bullets, bool playerAlive,sf::Sound &hit, sf::Sound &kill){
     
     if (enemies.size()>0){ //Check for collisions
         for (std::list<Enemy>::iterator it = enemies.begin(); it != enemies.end(); it++){
@@ -76,7 +77,8 @@ void EnemyArray::updatePractice(BulletArray &bullets, bool playerAlive){
                 if (not (*it).isDead()){
                     if (bullets.collides((*it).pos,false)){
                         (*it).getsHit();
-                        //Play sound
+						hit.play();
+						if ((*it).isDead()) kill.play();
                         it--;
                     }
                 }

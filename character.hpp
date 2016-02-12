@@ -8,7 +8,7 @@ class Character
 public:
     
     Character(sf::Sprite&);
-	void update(sf::Sprite&, BulletArray&);
+	void update(sf::Sprite&, BulletArray&,sf::Sound&);
     bool isFocused();
     
     sf::Vector2f pos;
@@ -23,7 +23,7 @@ private:
 	
 	
 	void move(sf::Sprite&);
-    void shoot(BulletArray&);
+    void shoot(BulletArray&,sf::Sound&);
     
 };
 

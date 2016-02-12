@@ -8,7 +8,7 @@ class EnemyArray
 public:
     
     EnemyArray();
-    void updateArray(BulletArray &bullets,bool,double&);
+    void updateArray(BulletArray &bullets,bool,double&,sf::Sound&,sf::Sound&);
     void addEnemy(float,float,int);
     int amountEnemies();
     bool collides(sf::Vector2f);
@@ -19,7 +19,7 @@ public:
     bool isMirror(int);
     
     void startPractice(int);
-    void updatePractice(BulletArray &bullets,bool);
+    void updatePractice(BulletArray &bullets,bool,sf::Sound&,sf::Sound&);
     bool finishPractice();
 	
 	int getStages();
