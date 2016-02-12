@@ -75,7 +75,7 @@ void EnemyArray::updatePractice(BulletArray &bullets, bool playerAlive,sf::Sound
             if ((*it).in_bounds() or ((*it).pos.x == -50 and (*it).pos.y == -50)){
                 (*it).update(bullets);
                 if (not (*it).isDead()){
-                    if (bullets.collides((*it).pos,false)){ //and (*it).getType()!=5){ //wtf. (*it).getsHit() && (*it).getType()==5 updates *it position
+                    if (bullets.collides((*it).pos,false)){
                         (*it).getsHit();
 						hit.play();
 						if ((*it).isDead()) kill.play();
