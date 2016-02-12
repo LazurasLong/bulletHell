@@ -63,7 +63,7 @@ static const char* Game_Loop_Music = "./resources/music/game2.ogg";
 static const char* Select_Sound = "./resources/music/select.ogg";
 static const char* Death_Sound = "./resources/music/death.ogg";
 static const char* Shoot_Sound = "./resources/music/shoot.wav";
-static const char* Hit_Sound = "./resources/music/hit.ogg";
+static const char* Hit_Sound = "./resources/music/hit.wav";
 static const char* Kill_Sound = "./resources/music/kill.wav";
 
 

@@ -15,6 +15,8 @@ Enemy::Enemy(int t, bool m, int mod){
     if (t==1) hp = 1;
     else if (t==2) hp = 1;
     else if (t==3) hp = 5;
+	else if (t==4) hp = 1;
+	else if (t==5) hp = 1;
     
 }
 
@@ -202,7 +204,7 @@ void Enemy::getsHit(){
         if (type==3){
             if (timeAlive>200) hp--;
         }
-        else if (type!=4){
+        else if (type<3){
             hp--;
         }
     }
