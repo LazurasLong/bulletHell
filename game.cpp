@@ -71,16 +71,22 @@ void Game::play(){
     sf::Sprite baddie;
       baddie.setTexture(spriteTextures);
       
-	sf::SoundBuffer bufGame;
-		if (!bufGame.loadFromFile(Game_Music)) print_error("Game music");
+	sf::SoundBuffer bufGame1;
+		if (!bufGame1.loadFromFile(Game_Music)) print_error("Game intro music");
+	sf::SoundBuffer bufGame2;
+		if (!bufGame2.loadFromFile(Game_Loop_Music)) print_error("Game loop music");
 	sf::SoundBuffer bufDeath;
 		if (!bufDeath.loadFromFile(Death_Sound)) print_error("Death sound");
 	
 	sf::Sound gameMusic;
-		gameMusic.setBuffer(bufGame);
-		gameMusic.setLoop(true);
+		gameMusic.setBuffer(bufGame1);
 		gameMusic.setVolume(M_VOLUME);
 		gameMusic.play();
+	sf::Sound gameloopMusic;
+		gameloopMusic.setBuffer(bufGame2);
+		gameloopMusic.setLoop(true);
+		gameloopMusic.setVolume(M_VOLUME);
+		//gameloopMusic.play();
     sf::Sound deathSound;
 		deathSound.setBuffer(bufDeath);
 		deathSound.setVolume(S_VOLUME);
@@ -89,17 +95,16 @@ void Game::play(){
     //Vx = V*cos(z) = V * sqr(x²/x²+y²)
     //Vy = V*sin(z)
     
-    bool alive = true;
-	int timeDead = 0;
-    int bgpos = 0;
-    bool canExit = false;
-	bool exited = false;
-	double score = 0;
-	int fadeAmount = 1;
+	int timeDead = 0, bgpos = 0, fadeAmount = 1;
+    bool alive = true, canExit = false, exited = false;
+	double score = 0, gametime = 0;
+	
+	sf::Clock deltaClock;
     
     while (_myWindow->isOpen() and not canExit){
         
-
+		if (gameMusic.getStatus() == sf::SoundSource::Stopped and gameloopMusic.getStatus() == sf::SoundSource::Stopped) gameloopMusic.play();
+		
         bgpos++;
 		if (!alive) timeDead++;
 		//score++;
@@ -194,9 +199,11 @@ void Game::play(){
 					_myWindow->draw(Fade2);
 					fadeAmount-=2;
 					gameMusic.setVolume(minim(fadeAmount/10,M_VOLUME));
+					gameloopMusic.setVolume(minim(fadeAmount/10,M_VOLUME));
 				}
 				else {
 					gameMusic.stop();
+					gameloopMusic.stop();
 					if (not exited){
 						_myWindow->draw(Fade2);						
 						_myWindow->draw(exitText);

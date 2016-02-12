@@ -58,7 +58,8 @@ static const char* Font_File = "./resources/ChaparralPro.ttf";
 
 
 static const char* Menu_Music = "./resources/music/menu.ogg";
-static const char* Game_Music = "./resources/music/game.ogg";
+static const char* Game_Music = "./resources/music/game1.ogg";
+static const char* Game_Loop_Music = "./resources/music/game2.ogg";
 static const char* Select_Sound = "./resources/music/select.ogg";
 static const char* Death_Sound = "./resources/music/death.ogg";
 static const char* Shoot_Sound = "./resources/music/shoot.ogg";

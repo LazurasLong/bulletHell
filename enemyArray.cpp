@@ -172,7 +172,7 @@ void EnemyArray::updateRoutine(){
             Enemy newEnemy(2,false,0);
             enemies.push_back(newEnemy);
         }
-        else if (routineTime==stdTime*9 or routineTime==stdTime*7 or routineTime==stdTime*10*5){
+        else if (routineTime==stdTime*9 or routineTime==stdTime*7 or routineTime==stdTime*5){
             Enemy newEnemy(2,true,0);
             enemies.push_back(newEnemy);
         }
