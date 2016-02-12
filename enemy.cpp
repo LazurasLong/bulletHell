@@ -211,6 +211,12 @@ void Enemy::getsHit(){
     
 }
 
+int Enemy::getType(){
+
+	return type;
+	
+}
+
 bool Enemy::isDead(){
 
     return (hp==0);

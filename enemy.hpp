@@ -17,7 +17,8 @@ public:
     
     sf::Vector2f getSprite();
     void getsHit();
-    
+    int getType();
+	
     bool isDead();
     bool canDelete();
     bool isMirror();
