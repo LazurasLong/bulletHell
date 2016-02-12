@@ -64,7 +64,6 @@ void Game::play(){
 		exitText.setString(os.str());
     
     BulletArray bullets;
-		bullets.addBullet(false,0,0,0,0,0);
     sf::Sprite bulletImg;
       bulletImg.setTexture(spriteTextures);
     
@@ -187,6 +186,7 @@ void Game::play(){
 
             if (bullets.isFriendly(i)) {
                 bulletImg.setTextureRect(sf::IntRect(64+12*7,160,12,12));
+				bulletImg.setOrigin(6,6);
             } else {
                 int bulletType = bullets.getType(i);
                 if (bulletType < 10) bulletImg.setTextureRect(sf::IntRect(64+12*bulletType,160,12,12));
