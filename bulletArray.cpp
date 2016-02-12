@@ -130,6 +130,10 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 }
             }
         }
+        else if (attack_type==0){
+			Bullet newBullet(0,G_HEIGHT,0,-5,false,11,0);
+			bullets.push_back(newBullet);
+		}
     }
 }
 

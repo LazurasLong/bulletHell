@@ -64,6 +64,7 @@ void Game::play(){
 		exitText.setString(os.str());
     
     BulletArray bullets;
+		bullets.addBullet(false,0,0,0,0,0);
     sf::Sprite bulletImg;
       bulletImg.setTexture(spriteTextures);
     
