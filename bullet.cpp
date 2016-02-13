@@ -13,7 +13,7 @@ Bullet::Bullet(float x, float y, float xvel, float yvel, bool playerShot, int bu
     
     time = 0;
     paused = false;
-    if (type==15 or type==16) bounce = true;
+    if (type==5 or type==6) bounce = true;
     else bounce = false;
 
 }
@@ -22,7 +22,7 @@ Bullet::~Bullet() {}
 
 void Bullet::updateBullet(){
     
-    if (type==15 or type==16){
+    if (type==5 or type==6){
         if (not paused){
             pos.x += vel.x;
             pos.y += vel.y;
@@ -43,11 +43,11 @@ void Bullet::updateBullet(){
                     bounce = false;
                 }
             }
-            if (type==15 and time>=15 and time<300) paused = true;
-            else if (type==16 and time>=10 and time<300) paused = true;
+            if (type==5 and time>=15 and time<300) paused = true;
+            else if (type==6 and time>=10 and time<300) paused = true;
         }
     }
-    else if (type==17 or type==18){
+    else if (type==7 or type==8){
         int spd1 = 10, spd2 = 5;
         int dist1 = 10, dist2 = 50;
         int axisX = (time+5)*20/9, axisY = 500*sin(0.0174533*(time+5));
@@ -84,12 +84,9 @@ bool Bullet::isFriendly(){
 
 bool Bullet::collides(float centerx,float centery,bool player){
 
-    int aux = type/10; //Big or small bullet
-    
-    
-    sf::FloatRect b1(pos.x-2-aux,pos.y-1,4+2*aux,2);
-    sf::FloatRect b2(pos.x-1.5+0.5*aux,pos.y-1.5+0.5*aux,3+aux,3+aux);
-    sf::FloatRect b3(pos.x-1,pos.y-2-aux,2,4+2*aux);
+    sf::FloatRect b1(pos.x-3,pos.y-1,6,2);
+    sf::FloatRect b2(pos.x-2,pos.y-2,4,4);
+    sf::FloatRect b3(pos.x-1,pos.y-3,2,6);
     
     
     if (player){
@@ -111,7 +108,7 @@ bool Bullet::collides(float centerx,float centery,bool player){
 
 int Bullet::getType(){
     
-    if (type==17 or type==18) return 16;
+    if (type==7 or type==8) return 6;
     else return type-1;
     
 }

@@ -21,7 +21,6 @@ void EnemyArray::updateArray(BulletArray &bullets, bool playerAlive, double &sco
                         (*it).getsHit();
                         hit.play();
 						if ((*it).isDead()) kill.play();
-                        it--;
                     }
                 }
                 else if ((*it).canDelete()){

@@ -42,7 +42,7 @@ void Game::play(){
     
     sf::Sprite focusPoint;
       focusPoint.setTexture(spriteTextures);
-      focusPoint.setTextureRect(sf::IntRect(112,172,12,12));
+      focusPoint.setTextureRect(sf::IntRect(112,160,12,12));
       focusPoint.setOrigin(6,6);
     
 	sf::Font font;
@@ -152,18 +152,22 @@ void Game::play(){
         
         bullets.updateArray(character.pos);
 		enemies.updateArray(bullets,alive,score,hitSound,killSound);
+		character.update(player,bullets,shootSound,alive);
 		
-        if (alive) {
-            character.update(player,bullets,shootSound);
+		player.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
+		if (timeDead<=20) _myWindow->draw(player);
+		
+		
+        if (alive) { //Draw focus, check death
             if (bullets.collides(character.pos,true) or enemies.collides(character.pos)){
                 alive = false;
 				deathSound.play();
 				//play death sound
             }
-            
-            player.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
-			_myWindow->draw(player);
-            
+			if (character.isFocused()) {
+                focusPoint.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
+                _myWindow->draw(focusPoint);
+            }
 
         }
 
@@ -189,8 +193,7 @@ void Game::play(){
 				bulletImg.setOrigin(6,6);
             } else {
                 int bulletType = bullets.getType(i);
-                if (bulletType < 10) bulletImg.setTextureRect(sf::IntRect(64+12*bulletType,160,12,12));
-                else bulletImg.setTextureRect(sf::IntRect(64+12*(bulletType-10),172,12,12));
+                bulletImg.setTextureRect(sf::IntRect(64+12*bulletType,160,12,12));
                 bulletImg.setOrigin(6,6);
             }
             sf::Vector2f bullet_Position;
@@ -200,35 +203,26 @@ void Game::play(){
 			_myWindow->draw(bulletImg);
         }
         
-        if (alive) { //Focus point
-            if (character.isFocused()) {
-                focusPoint.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
-                _myWindow->draw(focusPoint);
-            }
-        }
-        else {
-			//if (fadeAmount>0){
-			//	fadeAmount--;
-			//}
-			//else {
-				if (fadeAmount>1){
-					Fade2.setFillColor(sf::Color(0,0,0,255-fadeAmount));
-					_myWindow->draw(Fade2);
-					fadeAmount-=2;
-					gameMusic.setVolume(minim(fadeAmount/10,M_VOLUME));
-					gameloopMusic.setVolume(minim(fadeAmount/10,M_VOLUME));
+
+        if (not alive) { //Game screen fade
+			if (fadeAmount>1){
+				Fade2.setFillColor(sf::Color(0,0,0,255-fadeAmount));
+				_myWindow->draw(Fade2);
+				fadeAmount-=2;
+				gameMusic.setVolume(minim(fadeAmount/10,M_VOLUME));
+				gameloopMusic.setVolume(minim(fadeAmount/10,M_VOLUME));
+			}
+			else {
+				gameMusic.stop();
+				gameloopMusic.stop();
+				if (not exited){
+					_myWindow->draw(Fade2);						
+					_myWindow->draw(exitText);
 				}
-				else {
-					gameMusic.stop();
-					gameloopMusic.stop();
-					if (not exited){
-						_myWindow->draw(Fade2);						
-						_myWindow->draw(exitText);
-					}
-					else canExit = true;
-				}
-			//}
+				else canExit = true;
+			}
 	    }
+		
 		_myWindow->draw(Gbackground);
 		
 		std::ostringstream os;
@@ -279,7 +273,7 @@ void Game::practice(int stage){
     
     sf::Sprite focusPoint;
       focusPoint.setTexture(spriteTextures);
-      focusPoint.setTextureRect(sf::IntRect(112,172,12,12));
+      focusPoint.setTextureRect(sf::IntRect(112,160,12,12));
       focusPoint.setOrigin(6,6);
     
     
@@ -320,9 +314,8 @@ void Game::practice(int stage){
     //Vx = V*cos(z) = V * sqr(x²/x²+y²)
     //Vy = V*sin(z)
     
-    bool alive = true;
-    int bgpos = 0;
-    bool canExit = false;
+    bool alive = true, canExit = false;
+    int bgpos = 0, timeDead = 0;
     enemies.startPractice(stage);
     
     while (_myWindow->isOpen() and not canExit){
@@ -356,18 +349,27 @@ void Game::practice(int stage){
 		
         bullets.updateArray(character.pos);
         enemies.updatePractice(bullets,alive,hitSound,killSound);
-        
+        character.update(player,bullets,shootSound,alive);
+		
+		player.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
+		_myWindow->draw(player);
+		
         if (alive) {
-            character.update(player,bullets,shootSound);
             if (bullets.collides(character.pos,true) or enemies.collides(character.pos)){
                 alive = false;
 				deathSound.play();
             }
-            
-            player.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
-			_myWindow->draw(player);
-
+			if (character.isFocused()) {
+                focusPoint.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
+                _myWindow->draw(focusPoint);
+            }
         }
+        else {
+			timeDead++;
+			if (enemies.amountEnemies()==0 or timeDead>50){
+				canExit = true;
+			}
+	    }
 
         for (int i = 0;i<enemies.amountEnemies();i++){  //Draw enemies
             sf::Vector2f spr=enemies.getSpritePos(i);
@@ -389,9 +391,8 @@ void Game::practice(int stage){
             if (bullets.isFriendly(i)) {
                 bulletImg.setTextureRect(sf::IntRect(64+12*7,160,12,12));
             } else {
-                int bulletType = bullets.getType(i);
-                if (bulletType < 10) bulletImg.setTextureRect(sf::IntRect(64+12*bulletType,160,12,12));
-                else bulletImg.setTextureRect(sf::IntRect(64+12*(bulletType-10),172,12,12));
+                int bulletType = bullets.getType(i);                
+				bulletImg.setTextureRect(sf::IntRect(64+12*bulletType,160,12,12));
                 bulletImg.setOrigin(6,6);
             }
             sf::Vector2f bullet_Position;
@@ -400,22 +401,12 @@ void Game::practice(int stage){
 
 			_myWindow->draw(bulletImg);
         }
-        
-        if (alive) { //Focus point
-            if (character.isFocused()) {
-                focusPoint.setPosition(G_ORIGIN+character.pos.x,G_ORIGIN+character.pos.y);
-                _myWindow->draw(focusPoint);
-            }
-        } else {
-			if (enemies.amountEnemies()==0){
-			canExit = true;
-	    }
-	}
 	
-	if (enemies.finishPractice()){
-	    canExit = true;
-	}
+		if (enemies.finishPractice()){
+			canExit = true;
+		}
 		_myWindow->draw(Gbackground);
         _myWindow->display();
-    }    
+    }
+	
 }

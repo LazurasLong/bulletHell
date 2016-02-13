@@ -8,21 +8,19 @@ class Character
 public:
     
     Character(sf::Sprite&);
-	void update(sf::Sprite&, BulletArray&,sf::Sound&);
+	void update(sf::Sprite&, BulletArray&, sf::Sound&, bool);
     bool isFocused();
     
     sf::Vector2f pos;
-    int timeAlive;
-    
+	
 private:
     
-    int sprx, spry;
+    int sprx, spry, shootTimeout, timeAlive, timeDead;
     bool focused;
-    int shootTimeout;
     static const int shootFreq = 3;
 	
 	
-	void move(sf::Sprite&);
+	void move();
     void shoot(BulletArray&,sf::Sound&);
     
 };

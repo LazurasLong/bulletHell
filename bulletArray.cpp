@@ -8,22 +8,22 @@ BulletArray::BulletArray(){
 
 void BulletArray::updateArray(sf::Vector2f playerIs){
     
-    bool can_unpause14 = false;
-    bool can_unpause15 = false;
+    bool can_unpause4 = false;
+    bool can_unpause5 = false;
     
     for (std::list<Bullet>::iterator it = bullets.begin(); it != bullets.end(); it++){
         if ((*it).in_bounds()){
             (*it).updateBullet();
             int bulletType = (*it).getType();
-            if (bulletType==14){
-                if ((*it).canUnpause() or can_unpause14){
-                    can_unpause14 = true;
+            if (bulletType==4){
+                if ((*it).canUnpause() or can_unpause4){
+                    can_unpause4 = true;
                     (*it).unpause();
                 }
             }
-            else if (bulletType==15){
-                if ((*it).canUnpause() or can_unpause15){
-                    can_unpause15 = true;
+            else if (bulletType==5){
+                if ((*it).canUnpause() or can_unpause5){
+                    can_unpause5 = true;
                     (*it).unpause();
                 }
             }
@@ -71,7 +71,7 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 bvy = 0-bvy;
             }
             
-            Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type+10,0);
+            Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type,0);
             bullets.push_back(newEnemyBullet);
         }
         else if (attack_type==2){
@@ -88,7 +88,7 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                     bvy = 0-bvy;
                 }
                 
-                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type+10,0);
+                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type,0);
                 bullets.push_back(newEnemyBullet);
             }
         }
@@ -98,8 +98,8 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 float bvx = (float)5*cos(angle);
                 float bvy = (float)5*sin(angle);
                 
-                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type,0);
-                Bullet newEnemyBullet2(ox,oy,-bvx,bvy,false,10+bullet_type,0);
+                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type,0);
+                Bullet newEnemyBullet2(ox,oy,-bvx,bvy,false,bullet_type,0);
                 bullets.push_back(newEnemyBullet);
                 bullets.push_back(newEnemyBullet2);
                 
@@ -115,8 +115,8 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
                 float bvx2 = (float)2*cos(angle2);
                 float bvy2 = (float)2*sin(angle2);
                 
-                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,10+bullet_type,0);
-                Bullet newEnemyBullet2(ox,oy,bvx2,bvy2,false,10+bullet_type+1,0);
+                Bullet newEnemyBullet(ox,oy,bvx,bvy,false,bullet_type,0);
+                Bullet newEnemyBullet2(ox,oy,bvx2,bvy2,false,bullet_type+1,0);
                 bullets.push_back(newEnemyBullet);
                 bullets.push_back(newEnemyBullet2);
             }
@@ -124,8 +124,8 @@ void BulletArray::addBullet(bool player, float ox, float oy, int bullet_type, in
         else if (attack_type==5){
             for (int i=0;i<6;i++){
                 for (int j=0;j<6;j++){
-                    //Spaghetti code, stage as vel.x since it isn't used for bullet 17. Indicates mirror enemy
-                    Bullet newEnemyBullet(ox,oy,(float)stage,0,false,17,i*10+j);
+                    //Spaghetti code, stage as vel.x since it isn't used for bullet 7. Indicates mirror enemy
+                    Bullet newEnemyBullet(ox,oy,(float)stage,0,false,7,i*10+j);
                     bullets.push_back(newEnemyBullet);
                 }
             }
